@@ -41,35 +41,47 @@ public class UserController {
 	}
 	
 	@RequestMapping("/cadastrar")
-	public String cadastro(Model model){
-		model.addAttribute("perfil", new Perfil());
-		return "cadastro";
+	public ModelAndView cadastro(){
+		ModelAndView model = new ModelAndView();
+		model.setViewName("cadastro");
+		model.addObject("perfil", new Perfil());
+		return model;
 	}
 	
 	@RequestMapping(value="/salvarPerfil", method=RequestMethod.POST)
-	public String salvar(Perfil perfil, BindingResult result, Model model) throws SQLException{
+	public ModelAndView salvar(Perfil perfil, BindingResult result) throws SQLException{
 		DaoPerfil.inserir(perfil);
-		return "index";
+		ModelAndView model = new ModelAndView();
+		model.setViewName("index");
+		return model;
 	}
 	
 	@RequestMapping(value="/login")
-	public String login(Usuario user, BindingResult result, HttpSession session, Model model){
+	public ModelAndView login(Usuario user, HttpSession session){
+		ModelAndView model = new ModelAndView();
 		Perfil p = DaoPerfil.logar(user);
-		if(p != null)
+		if(p != null){
 			session.setAttribute("perfilLogado", p);
-		return "forward:/perfil";
+			model.setViewName("perfil");
+		}else
+			model.setViewName("index");
+		return model;
 	}
 	
 	@RequestMapping("/perfil/sair")
-	public String sair(HttpSession session){
+	public ModelAndView sair(HttpSession session){
+		ModelAndView model = new ModelAndView();
+		model.setViewName("index");
 		session.removeAttribute("perfilLogado");
-		return "index";
+		return model;
 	}
 	
 	@RequestMapping("/pessoas")
-	public String Pessoas(Model model) throws SQLException{
-		model.addAttribute("perfis", DaoPerfil.listarPerfis());
-		return "pessoas";
+	public ModelAndView Pessoas() throws SQLException{
+		ModelAndView model = new ModelAndView();
+		model.setViewName("pessoas");
+		model.addObject("perfis", DaoPerfil.listarPerfis());
+		return model;
 	}
 	
 	
