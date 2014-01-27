@@ -1,0 +1,15 @@
+body { padding-top: 70px; }
+
+aside{
+	width: 196px;
+}
+aside a{
+	margin: 0 auto;
+}
+header{
+	border: dashed;
+	height: 241px;
+}
+.tablea{
+	width: 500px;
+}
