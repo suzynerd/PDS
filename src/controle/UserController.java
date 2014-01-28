@@ -69,11 +69,9 @@ public class UserController {
 	}
 	
 	@RequestMapping("/perfil/sair")
-	public ModelAndView sair(HttpSession session){
-		ModelAndView model = new ModelAndView();
-		model.setViewName("index");
+	public String sair(HttpSession session){
 		session.removeAttribute("perfilLogado");
-		return model;
+		return "redirect:/";
 	}
 	
 	@RequestMapping("/pessoas")

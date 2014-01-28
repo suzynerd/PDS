@@ -39,7 +39,7 @@
         				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
         					<b class="glyphicon glyphicon-search"></b></a>
         				<ul class="dropdown-menu">
-          					<li><a href="#">Pessoas</a></li>
+          					<li><a href="${home}pessoas">Pessoas</a></li>
           					<li><a href="#">Turmas</a></li>
         			</ul></li>
     			</ul>

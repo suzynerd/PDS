@@ -22,6 +22,48 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 </head>
 <body>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  			<div class="navbar-header">
+    			<button type="button" class="navbar-toggle" data-toggle="collapse"
+    			data-target="#bs-example-navbar-collapse-1">
+      				<span class="sr-only">Toggle navigation</span>
+      				<span class="glyphicon glyphicon-align-justify"></span>
+    			</button>
+    			<c:url var="home" value="/"/>
+    			<a class="navbar-brand" href="${home}">SysRedIN</a>
+  			</div>
+  			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    			<ul class="nav navbar-nav">
+    				
+    				<li class="active"><a href="${home}perfil">Perfil</a></li>
+      				<li><a href="#">Amigos</a></li>
+      				<li><a href="${home}turmas">Minhas Turmas</a></li>
+      				<li><a href="${home}arquivos">Arquivos</a></li>
+      				
+      				<li class="dropdown">
+        				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        					<b class="glyphicon glyphicon-search"></b></a>
+        				<ul class="dropdown-menu">
+          					<li><a href="${home}pessoas">Pessoas</a></li>
+          					<li><a href="#">Turmas</a></li>
+        			</ul></li>
+    			</ul>
+    			<ul class="nav navbar-nav navbar-right">
+      				<li class="dropdown">
+        				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        					<b class="glyphicon glyphicon-cog"></b></a>
+        				<ul class="dropdown-menu">
+          					<li><a href="#">Preferencias</a></li>
+          					<li class="divider"></li>
+          					<c:url var="profile" value="/perfil"/>
+          					<li><a href="${profile}/sair">Sair</a></li>
+        		</ul></li></ul>
+
+  				<p class="navbar-text navbar-right">${sessionScope.perfilLogado.nome}</p>
+  			</div>
+		</nav>
+
+
 	<table class="table table-hover">
     <tr>
       <td>Nome</td><td>Opções</td>
@@ -29,7 +71,7 @@
     <c:forEach var="perfil" items="${perfis}">
       <td>${perfil.nome}</td>
       <c:url var="pessoas" value="/pessoas"></c:url>
-      <td><a href="${amigos}/adicionarAmigo?id=${perfil.id}" class="btn btn-success">Adicionar Amigo</a></td>
+      <td><a href="${pessoas}/adicionarAmigo?idPerfil=${perfil.idPerfil}" class="btn btn-success">Adicionar Amigo</a></td>
     </c:forEach>
   </table>
 </body>

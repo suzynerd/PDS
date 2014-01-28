@@ -29,18 +29,17 @@
   			</div>
   			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     			<ul class="nav navbar-nav">
-    			<c:url var="home" value="/"/>
+    				<c:url var="home" value="/"/>
     				<li class="active"><a href="${home}perfil">Perfil</a></li>
       				<li><a href="#">Amigos</a></li>
-      				<li><a href="#">Minhas Turmas</a></li>
-      				<c:url var="files" value="/arquivos"/>
-      				<li><a href="${files}">Arquivos</a></li>
+      				<li><a href="${home}turmas">Minhas Turmas</a></li>
+      				<li><a href="${home}arquivos">Arquivos</a></li>
       				
       				<li class="dropdown">
         				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
         					<b class="glyphicon glyphicon-search"></b></a>
         				<ul class="dropdown-menu">
-          					<li><a href="#">Pessoas</a></li>
+          					<li><a href="${home}pessoas">Pessoas</a></li>
           					<li><a href="#">Turmas</a></li>
         			</ul></li>
     			</ul>

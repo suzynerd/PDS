@@ -17,7 +17,7 @@ public class DaoPerfil{
 	
 	public DaoPerfil(){
 		Connection conexao = null;
-		try {conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/root", "root", "alejandro");
+		try {conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "alejandro");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -28,6 +28,10 @@ public class DaoPerfil{
 		if (daoPerfil == null)
 			daoPerfil = new DaoPerfil();
 		return daoPerfil;
+	}
+	
+	public static Connection getConnection(){
+		return conexao;
 	}
 	
 	public static void inserir(Perfil perfil) throws SQLException {
