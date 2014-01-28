@@ -1,4 +1,4 @@
-%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
@@ -35,7 +35,7 @@
   			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     			<ul class="nav navbar-nav">
     				
-    				<li class="active"><a href="${home}perfil">Perfil</a></li>
+    				<li><a href="${home}perfil">Perfil</a></li>
       				<li><a href="#">Amigos</a></li>
       				<li><a href="${home}turmas">Minhas Turmas</a></li>
       				<li><a href="${home}arquivos">Arquivos</a></li>
@@ -44,7 +44,7 @@
         				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
         					<b class="glyphicon glyphicon-search"></b></a>
         				<ul class="dropdown-menu">
-          					<li><a href="${home}pessoas">Pessoas</a></li>
+          					<li class="active"><a href="${home}pessoas">Pessoas</a></li>
           					<li><a href="#">Turmas</a></li>
         			</ul></li>
     			</ul>
@@ -69,9 +69,13 @@
       <td>Nome</td><td>Opções</td>
     </tr>
     <c:forEach var="perfil" items="${perfis}">
-      <td>${perfil.nome}</td>
-      <c:url var="pessoas" value="/pessoas"></c:url>
-      <td><a href="${pessoas}/adicionarAmigo?idPerfil=${perfil.idPerfil}" class="btn btn-success">Adicionar Amigo</a></td>
+    	<c:if test="${sessionScope.perfilLogado.idPerfil != perfil.idPerfil}">
+    		<tr>
+      			<td>${perfil.nome}</td>
+      			<c:url var="pessoas" value="/pessoas"></c:url>
+      			<td><a href="${pessoas}/adicionarAmigo?idPerfil=${perfil.idPerfil}" class="btn btn-success">Adicionar Amigo</a></td>
+    		</tr>
+    	</c:if>
     </c:forEach>
   </table>
 </body>
