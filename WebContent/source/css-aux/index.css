@@ -13,3 +13,11 @@ header{
 .tablea{
 	width: 500px;
 }
+.cadastro{
+	width: 300px;
+	padding: 10px;
+	padding-right: 25px;
+}
+.cadastro .btn{
+	margin-top: 10px;
+}

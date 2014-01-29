@@ -10,7 +10,7 @@
 	
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="${src}/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-	<link href="${src}/css-aux/perfil.css" rel="stylesheet" type="text/css">
+	<link href="${src}/css-aux/index.css" rel="stylesheet" type="text/css">
 
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="${src}/js/bootstrap.min.js"></script>
@@ -31,7 +31,7 @@
     			<ul class="nav navbar-nav">
     				<c:url var="home" value="/"/>
     				<li class="active"><a href="${home}perfil">Perfil</a></li>
-      				<li><a href="#">Amigos</a></li>
+      				<li><a href="${home}amigos">Amigos</a></li>
       				<li><a href="${home}turmas">Minhas Turmas</a></li>
       				<li><a href="${home}arquivos">Arquivos</a></li>
       				

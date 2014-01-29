@@ -85,7 +85,7 @@ public class UserController {
 	
 	@RequestMapping(value="/pessoas/adicionarAmigo", method=RequestMethod.GET)
 	public String addAmigo(@RequestParam("idPerfil") Integer idPerfil){
-		
+		return null;
 	}
 	
 	

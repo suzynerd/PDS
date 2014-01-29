@@ -9,11 +9,11 @@
 <head>
 	<title>SysRedIN</title>
 	<c:url var="src" value="/source"/>
-	
+	<c:url var="home" value="/"/>
 	
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="${src}/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-	<link href="${src}/css-aux/perfil.css" rel="stylesheet" type="text/css">
+	<link href="${src}/css-aux/index.css" rel="stylesheet" type="text/css">
 
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="${src}/js/bootstrap.min.js"></script>
@@ -32,28 +32,23 @@
   			</div>
   			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     			<ul class="nav navbar-nav navbar-right">
-    					<c:url var="cadastrar" value="/cadastrar"/>
-    					<li><a href="${cadastrar}">Cadastrar</a></li>
+    				<li><a href="${home}cadastrar">Cadastrar</a></li>
       				<li class="dropdown">
         					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Entrar <b class="caret"></b></a>
         					<ul class="dropdown-menu">
-     
-        					</ul>
+								<form role="form" method="post" action="${home}login" class="cadastro">
+        							<div class="form-group">
+        								<input value="${usuario.email}" name="email" type="email" class="form-control" placeholder="E-mail">
+        							</div>
+        							<div>
+        								<input value="${usuario.senha}" name="senha" type="password" class="form-control" placeholder="Senha">
+        							</div>
+        							<button type="submit" class="btn btn-success" value="login">Confirmar</button>
+         					</form>
+        				</ul>
       				</li>
       			</ul>
   			</div>
 		</nav>
-		
-		<p>${mensagem}</p>
-		<c:url  var="login" value="/login"/>
-		<form role="form" method="post" action="${login}">
-                     			<div class="form-group">
-                     				<input value="${usuario.email}" name="email" type="email" class="form-control" placeholder="E-mail">
-                     			</div>
-                     			<div>
-                     				<input value="${usuario.senha}" name="senha" type="password" class="form-control" placeholder="Senha">
-                     			</div>
-                     			<button type="submit" class="btn btn-success" value="login">Confirmar</button>
-                     		</form>
 </body>
 </html>
