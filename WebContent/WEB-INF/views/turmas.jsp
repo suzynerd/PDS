@@ -25,7 +25,7 @@
       				<span class="sr-only">Toggle navigation</span>
       				<span class="glyphicon glyphicon-align-justify"></span>
     			</button>
-    			<a class="navbar-brand" href="#">SysRedIN</a>
+    			<a class="navbar-brand" href="${home}">SysRedIN</a>
   			</div>
   			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     			<ul class="nav navbar-nav">

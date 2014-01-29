@@ -7,7 +7,7 @@
 
 <html>
 <head>
-	<title>Cadastro</title>
+	<title>Pessoas</title>
 	<c:url var="src" value="/source"/>
 	<c:url var="home" value="/"/>
 	<c:url var="salvar" value="/salvarPerfil"/>
@@ -36,7 +36,7 @@
     			<ul class="nav navbar-nav">
     				
     				<li><a href="${home}perfil">Perfil</a></li>
-      				<li><a href="#">Amigos</a></li>
+      				<li><a href="${home}amigos">Amigos</a></li>
       				<li><a href="${home}turmas">Minhas Turmas</a></li>
       				<li><a href="${home}arquivos">Arquivos</a></li>
       				

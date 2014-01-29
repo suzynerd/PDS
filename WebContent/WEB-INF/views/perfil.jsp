@@ -7,6 +7,7 @@
 <head>
 	<title>${sessionScope.perfilLogado.nome}</title>
 	<c:url var="src" value="/source"/>
+	<c:url var="home" value="/"/>
 	
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="${src}/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -25,11 +26,10 @@
       				<span class="sr-only">Toggle navigation</span>
       				<span class="glyphicon glyphicon-align-justify"></span>
     			</button>
-    			<a class="navbar-brand" href="#">SysRedIN</a>
+    			<a class="navbar-brand" href="${home}">SysRedIN</a>
   			</div>
   			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     			<ul class="nav navbar-nav">
-    				<c:url var="home" value="/"/>
     				<li class="active"><a href="${home}perfil">Perfil</a></li>
       				<li><a href="${home}amigos">Amigos</a></li>
       				<li><a href="${home}turmas">Minhas Turmas</a></li>
