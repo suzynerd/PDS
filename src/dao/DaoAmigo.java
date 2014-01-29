@@ -11,13 +11,9 @@ import dominio.Perfil;
 
 public class DaoAmigo {
 	private static DaoAmigo daoAmigo;
-	private static Connection conexao;
+	private static Connection conexao = Conexao.getConnection();
 	
-	public DaoAmigo(){
-		DaoAmigo.conexao = DaoPerfil.getConnection();
-	}
-	
-	public static synchronized DaoAmigo getInstance(){
+	public static synchronized DaoAmigo getInstance() throws SQLException{
 		if (daoAmigo == null)
 			daoAmigo = new DaoAmigo();
 		return daoAmigo;
@@ -41,7 +37,6 @@ public class DaoAmigo {
 		ResultSet rs = stm.executeQuery(); stm.close();
 		while(rs.next())
 			ids.add(rs.getInt("Perfil_idPerfil1"));
-		rs.close();
 		
 		sql = "select Perfil_idPerfil from amigo where Perfil_idPerfil1 = ?";
 		stm = conexao.prepareStatement(sql);
@@ -49,7 +44,6 @@ public class DaoAmigo {
 		rs = stm.executeQuery();
 		while(rs.next())
 			ids.add(rs.getInt("Perfil_idPerfil"));
-		rs.close();
 		
 		sql = "select * from perfil where idPerfil = ?";
 		for (int i = 0; i < ids.size(); i++) {
@@ -63,9 +57,9 @@ public class DaoAmigo {
 				pe.setEmail(rs.getString("email"));
 				p.add(pe);
 			}
-			stm.close();
-			rs.close();
 		}
+		stm.close();
+		rs.close();
 		return p;
 	}
 }

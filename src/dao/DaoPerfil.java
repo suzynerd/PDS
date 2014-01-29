@@ -13,16 +13,7 @@ import dominio.Usuario;
 
 public class DaoPerfil{
 	private static DaoPerfil daoPerfil;
-	private static Connection conexao;
-	
-	public DaoPerfil(){
-		Connection conexao = null;
-		try {conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "alejandro");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		DaoPerfil.conexao = conexao;
-	}
+	private static Connection conexao = Conexao.getConnection();
 	
 	public static synchronized DaoPerfil getInstance(){
 		if (daoPerfil == null)
@@ -30,7 +21,9 @@ public class DaoPerfil{
 		return daoPerfil;
 	}
 	
-	public static Connection getConnection(){
+	public static Connection getConnection() throws SQLException{
+		if(conexao == null)
+			conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "alejandro");
 		return conexao;
 	}
 	

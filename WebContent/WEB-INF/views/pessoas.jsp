@@ -73,7 +73,7 @@
     		<tr>
       			<td>${perfil.nome}</td>
       			<c:url var="pessoas" value="/pessoas"></c:url>
-      			<td><a href="${pessoas}/adicionarAmigo?idPerfil=${perfil.idPerfil}" class="btn btn-success">Adicionar Amigo</a></td>
+      			<td><a href="${pessoas}/adicionarAmigo?idAmigo=${perfil.idPerfil}" class="btn btn-success">Adicionar Amigo</a></td>
     		</tr>
     	</c:if>
     </c:forEach>
