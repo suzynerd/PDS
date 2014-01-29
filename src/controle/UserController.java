@@ -75,18 +75,5 @@ public class UserController {
 		return "redirect:/";
 	}
 	
-	@RequestMapping("/pessoas")
-	public ModelAndView Pessoas() throws SQLException{
-		ModelAndView model = new ModelAndView();
-		model.setViewName("pessoas");
-		model.addObject("perfis", DaoPerfil.listarPerfis());
-		return model;
-	}
-	
-	@RequestMapping(value="/pessoas/adicionarAmigo", method=RequestMethod.GET)
-	public String addAmigo(@RequestParam("idPerfil") Integer idPerfil){
-		return null;
-	}
-	
 	
 }

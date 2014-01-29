@@ -24,7 +24,7 @@ public class TurmaControler {
 	
 	@RequestMapping("/novaturma")
 	public ModelAndView novaTurma(){
-		ModelAndView model = new ModelAndView("NewTurma");
+		ModelAndView model = new ModelAndView("novaturma");
 		return model;
 	}
 	

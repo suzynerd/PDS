@@ -33,6 +33,8 @@ public class DaoAmigo {
 	
 	public static List<Perfil> listarAmigo(Integer idPerfil) throws SQLException{
 		List<Integer> ids = new ArrayList<>();
+		List<Perfil> p = new ArrayList<>();
+		
 		String sql = "select Perfil_idPerfil1 from amigo where Perfil_idPerfil = ?";
 		PreparedStatement stm = conexao.prepareStatement(sql);
 		stm.setInt(1, idPerfil);
@@ -50,10 +52,20 @@ public class DaoAmigo {
 		rs.close();
 		
 		sql = "select * from perfil where idPerfil = ?";
-		while (ids.iterator().next() != null) {
+		for (int i = 0; i < ids.size(); i++) {
 			stm = conexao.prepareStatement(sql);
-			
+			stm.setInt(1, ids.get(i));
+			rs = stm.executeQuery();
+			while(rs.next()){
+				Perfil pe = new Perfil();
+				pe.setIdPerfil(rs.getInt("idPerfil"));
+				pe.setNome(rs.getString("nome"));
+				pe.setEmail(rs.getString("email"));
+				p.add(pe);
+			}
+			stm.close();
+			rs.close();
 		}
-		return null;
+		return p;
 	}
 }
