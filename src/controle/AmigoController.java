@@ -38,4 +38,10 @@ public class AmigoController {
 		model.addObject("perfis", DaoAmigo.listarAmigo( ((Perfil) session.getAttribute("perfilLogado")).getIdPerfil() ));
 		return model;
 	}
+	
+	@RequestMapping(value="/amigos/removerAmigo", method=RequestMethod.GET)
+	public String removeAmigo(@RequestParam("idAmigo") Integer idAmigo, HttpSession session){
+		
+		return null;
+	}
 }

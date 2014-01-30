@@ -1,7 +1,6 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,27 +12,14 @@ import dominio.Usuario;
 
 public class DaoPerfil{
 	private static DaoPerfil daoPerfil;
-	private static Connection conexao;
+	private static Connection conexao = Conexao.getConnection();
 	
-	public DaoPerfil(){
-		Connection conexao = null;
-		try {conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "alejandro");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		DaoPerfil.conexao = conexao;
-	}
 	
 	public static synchronized DaoPerfil getInstance(){
 		if (daoPerfil == null)
 			daoPerfil = new DaoPerfil();
 		return daoPerfil;
 	}
-	
-	public static Connection getConnection(){
-		return conexao;
-	}
-	
 	public static void inserir(Perfil perfil) throws SQLException {
 		try {
 			

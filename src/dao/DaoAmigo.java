@@ -11,12 +11,8 @@ import dominio.Perfil;
 
 public class DaoAmigo {
 	private static DaoAmigo daoAmigo;
-	private static Connection conexao;
-	
-	public DaoAmigo(){
-		DaoAmigo.conexao = DaoPerfil.getConnection();
-	}
-	
+	private static Connection conexao = Conexao.getConnection();
+
 	public static synchronized DaoAmigo getInstance(){
 		if (daoAmigo == null)
 			daoAmigo = new DaoAmigo();
@@ -24,7 +20,7 @@ public class DaoAmigo {
 	}
 	
 	public static void adicionarAmigo(Integer idPerfil, Integer idAmigo) throws SQLException{
-		String sql = "insert into amigo (Perfil_idPerfil, Perfil_idPerfil1) values (?,?)";
+		String sql = "insert into amigo (idPerfil, idPerfil1) values (?,?)";
 		PreparedStatement stm = conexao.prepareStatement(sql);
 		stm.setInt(1, idPerfil); stm.setInt(2, idAmigo);
 		stm.executeUpdate();
@@ -35,21 +31,19 @@ public class DaoAmigo {
 		List<Integer> ids = new ArrayList<>();
 		List<Perfil> p = new ArrayList<>();
 		
-		String sql = "select Perfil_idPerfil1 from amigo where Perfil_idPerfil = ?";
+		String sql = "select idPerfil1 from amigo where idPerfil = ?";
 		PreparedStatement stm = conexao.prepareStatement(sql);
 		stm.setInt(1, idPerfil);
-		ResultSet rs = stm.executeQuery(); stm.close();
+		ResultSet rs = stm.executeQuery();
 		while(rs.next())
-			ids.add(rs.getInt("Perfil_idPerfil1"));
-		rs.close();
+			ids.add(rs.getInt("idPerfil1"));
 		
-		sql = "select Perfil_idPerfil from amigo where Perfil_idPerfil1 = ?";
+		sql = "select idPerfil from amigo where idPerfil1 = ?";
 		stm = conexao.prepareStatement(sql);
 		stm.setInt(1, idPerfil);
 		rs = stm.executeQuery();
 		while(rs.next())
-			ids.add(rs.getInt("Perfil_idPerfil"));
-		rs.close();
+			ids.add(rs.getInt("idPerfil"));
 		
 		sql = "select * from perfil where idPerfil = ?";
 		for (int i = 0; i < ids.size(); i++) {
@@ -63,9 +57,9 @@ public class DaoAmigo {
 				pe.setEmail(rs.getString("email"));
 				p.add(pe);
 			}
-			stm.close();
-			rs.close();
 		}
+		stm.close();
+		rs.close();
 		return p;
 	}
 }
