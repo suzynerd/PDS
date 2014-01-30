@@ -19,8 +19,7 @@ public class AmigoController {
 
 	@RequestMapping(value="/pessoas/adicionarAmigo", method=RequestMethod.GET)
 	public String addAmigo(@RequestParam("idAmigo") Integer idAmigo, HttpSession session) throws SQLException{
-		Perfil p = (Perfil) session.getAttribute("perfilLogado");
-		DaoAmigo.adicionarAmigo(p.getIdPerfil() , idAmigo);
+		DaoAmigo.adicionarAmigo(((Perfil) session.getAttribute("perfilLogado")).getIdPerfil() , idAmigo);
 		return "redirect:/amigos";
 	}
 	
