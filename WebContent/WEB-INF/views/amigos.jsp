@@ -68,14 +68,12 @@
     <tr>
       <td>Nome</td><td>Opções</td>
     </tr>
-    <c:forEach var="perfil" items="${perfis}">
-    	<c:if test="${sessionScope.perfilLogado.idPerfil != perfil.idPerfil}">
+    <c:forEach var="amigo" items="${amigos}">
     		<tr>
-      			<td>${perfil.nome}</td>
-      			<c:url var="pessoas" value="/pessoas"></c:url>
-      			<td><a href="${pessoas}/removerAmigo?idAmigo=${perfil.idPerfil}" class="btn btn-danger">Remover Amigo</a></td>
+      			<td>${amigo.nome}</td>
+      			<c:url var="amigos" value="/amigos"></c:url>
+      			<td><a href="${amigos}/removerAmigo?idRelacao=${amigo.idRelacao}" class="btn btn-danger">Remover Amigo</a></td>
     		</tr>
-    	</c:if>
     </c:forEach>
   </table>
 </body>

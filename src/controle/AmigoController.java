@@ -35,13 +35,13 @@ public class AmigoController {
 	public ModelAndView amigos(HttpSession session) throws SQLException{
 		ModelAndView model = new ModelAndView();
 		model.setViewName("amigos");
-		model.addObject("perfis", DaoAmigo.listarAmigo( ((Perfil) session.getAttribute("perfilLogado")).getIdPerfil() ));
+		model.addObject("amigos", DaoAmigo.listarAmigo(((Perfil) session.getAttribute("perfilLogado")).getIdPerfil() ));
 		return model;
 	}
 	
 	@RequestMapping(value="/amigos/removerAmigo", method=RequestMethod.GET)
-	public String removeAmigo(@RequestParam("idAmigo") Integer idAmigo, HttpSession session){
-		
-		return null;
+	public String removeAmigo(@RequestParam("idRelacao") Integer idRelacao) throws SQLException{
+		DaoAmigo.removeAmigo(idRelacao);
+		return "redirect:/amigos";
 	}
 }

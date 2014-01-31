@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dominio.Amigo;
 import dominio.Perfil;
 
 public class DaoAmigo {
@@ -27,39 +28,50 @@ public class DaoAmigo {
 		stm.close();
 	}
 	
-	public static List<Perfil> listarAmigo(Integer idPerfil) throws SQLException{
-		List<Integer> ids = new ArrayList<>();
-		List<Perfil> p = new ArrayList<>();
+	public static List<Amigo> listarAmigo(Integer idPerfil) throws SQLException{
+		List<Amigo> p = new ArrayList<>();
 		
-		String sql = "select idPerfil1 from amigo where idPerfil = ?";
+		String sql = "select * from amigo where idPerfil = ?";
 		PreparedStatement stm = conexao.prepareStatement(sql);
 		stm.setInt(1, idPerfil);
 		ResultSet rs = stm.executeQuery();
-		while(rs.next())
-			ids.add(rs.getInt("idPerfil1"));
-		
-		sql = "select idPerfil from amigo where idPerfil1 = ?";
+		while(rs.next()){
+			Amigo a = new Amigo();
+			a.setIdAmigo(rs.getInt("idPerfil1"));
+			a.setIdRelacao(rs.getInt("idRelacao"));
+			p.add(a);
+		}
+		sql = "select * from amigo where idPerfil1 = ?";
 		stm = conexao.prepareStatement(sql);
 		stm.setInt(1, idPerfil);
 		rs = stm.executeQuery();
-		while(rs.next())
-			ids.add(rs.getInt("idPerfil"));
+		while(rs.next()){
+			Amigo a = new Amigo();
+			a.setIdAmigo(rs.getInt("idPerfil"));
+			a.setIdRelacao(rs.getInt("idRelacao"));
+			p.add(a);
+		}
 		
 		sql = "select * from perfil where idPerfil = ?";
-		for (int i = 0; i < ids.size(); i++) {
+		for (int i = 0; i < p.size(); i++) {
 			stm = conexao.prepareStatement(sql);
-			stm.setInt(1, ids.get(i));
+			stm.setInt(1, p.get(i).getIdAmigo());
 			rs = stm.executeQuery();
 			while(rs.next()){
-				Perfil pe = new Perfil();
-				pe.setIdPerfil(rs.getInt("idPerfil"));
-				pe.setNome(rs.getString("nome"));
-				pe.setEmail(rs.getString("email"));
-				p.add(pe);
+				p.get(i).setNome(rs.getString("nome"));
 			}
 		}
 		stm.close();
 		rs.close();
 		return p;
+	}
+
+	public static void removeAmigo(Integer idRelacao) throws SQLException {
+		String sql = "delete from amigo where idRelacao = ?";
+		PreparedStatement stm;
+			stm = conexao.prepareStatement(sql);
+			stm.setInt(1, idRelacao);
+			stm.executeUpdate();
+			stm.close();
 	}
 }

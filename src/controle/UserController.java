@@ -31,10 +31,10 @@ public class UserController {
 	@RequestMapping("/perfil")
 	public ModelAndView perfil(HttpSession session){
 		ModelAndView model = new ModelAndView();
-		if (session.getAttribute("perfilLogado") != null) {
-			model.setViewName("perfil");
-		}else
+		if (session.getAttribute("perfilLogado") == null) {
 			model.setViewName("index");
+		}else
+			model.setViewName("perfil");
 		
 		return model;
 	}
@@ -59,11 +59,15 @@ public class UserController {
 	public ModelAndView login(Usuario user, HttpSession session){
 		ModelAndView model = new ModelAndView();
 		Perfil p = DaoPerfil.logar(user);
-		if(p != null){
+		if(user.getEmail() != null && user.getSenha() != null && p != null){
 			session.setAttribute("perfilLogado", p);
 			model.setViewName("perfil");
-		}else
-			model.setViewName("index");
+		}else{
+			if(session.getAttribute("perfilLogado") == null)
+				model.setViewName("index");
+			else
+				model.setViewName("perfil");
+		}
 		return model;
 	}
 	
