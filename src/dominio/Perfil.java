@@ -1,7 +1,7 @@
 package dominio;
 
 public class Perfil {
-	public Integer idPerfil;
+	public Integer idPerfil, idTipoPerfil;
 	public String nome;
 	public String email;
 	public String senha;
@@ -14,6 +14,12 @@ public class Perfil {
 		this.senha = senha;
 	}
 	
+	public Integer getIdTipoPerfil() {
+		return idTipoPerfil;
+	}
+	public void setIdTipoPerfil(Integer idTipoPerfil) {
+		this.idTipoPerfil = idTipoPerfil;
+	}
 	public Integer getIdPerfil() {
 		return idPerfil;
 	}
