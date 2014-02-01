@@ -62,11 +62,11 @@
 		<form role="form" action="${home}salvarturma">
 			<div class="form-group">
 				<label for="nome">Nome da Turma</label>
-				<input type="text" name="nome" id="nome" class="form-control" value="${nome}">
+				<input type="text" name="nome" id="nome" class="form-control" value="${turma.nome}">
 			</div>
 			<div class="form-group">
 				<label for="descricao">Descrição</label>
-				<textarea class="form-control" rows="2" type="text" name="descricao" id="descricao" value="${descricao}"></textarea>
+				<textarea class="form-control" rows="2" type="text" name="descricao" id="descricao" value="${turma.descricao}"></textarea>
 			</div>
 			
 			<input type="submit" class="btn btn-success" value="salvar">

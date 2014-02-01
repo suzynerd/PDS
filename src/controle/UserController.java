@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import dao.DaoPerfil;
+import dao.DaoTipo;
 import dominio.Perfil;
 import dominio.Usuario;
 
@@ -40,7 +41,7 @@ public class UserController {
 	}
 	
 	@RequestMapping("/cadastrar")
-	public ModelAndView cadastro(){
+	public ModelAndView cadastro() throws SQLException{
 		ModelAndView model = new ModelAndView();
 		model.setViewName("cadastro");
 		model.addObject("perfil", new Perfil());
@@ -48,11 +49,9 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/salvarPerfil", method=RequestMethod.POST)
-	public ModelAndView salvar(Perfil perfil, BindingResult result) throws SQLException{
+	public String salvar(Perfil perfil, BindingResult result) throws SQLException{
 		DaoPerfil.inserir(perfil);
-		ModelAndView model = new ModelAndView();
-		model.setViewName("index");
-		return model;
+		return "redirect:/";
 	}
 	
 	@RequestMapping(value="/login")

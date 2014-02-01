@@ -23,7 +23,7 @@ public class DaoPerfil{
 	public static void inserir(Perfil perfil) throws SQLException {
 		try {
 			
-			String sql = "insert into perfil (nome, email, senha) values (?, ?, ?)";
+			String sql = "insert into perfil (nome, email, senha, idTipo) values (?, ?, ?, 2)";
 			PreparedStatement stm = conexao.prepareStatement(sql);
 			stm.setString(1, perfil.getNome());
 			stm.setString(2, perfil.getEmail());

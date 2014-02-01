@@ -42,7 +42,6 @@
     			<label for="exampleInputPassword1">Senha</label>
     			<input value="${perfil.senha}" type="password" name="senha" class="form-control" id="exampleInputPassword1" placeholder="Digite sua senha">
   			</div>
-  			
   			<button type="submit" class="btn btn-success" value="salvar">Submit</button>
   		</form>
   	</div>
