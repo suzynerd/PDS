@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import dao.DaoPerfil;
@@ -16,7 +17,7 @@ import dominio.Perfil;
 import dominio.Usuario;
 
 @Controller
-public class UserController {
+public class PerfilController {
 	
 	@RequestMapping("/")
 	public ModelAndView home(HttpSession session){
@@ -41,16 +42,18 @@ public class UserController {
 	}
 	
 	@RequestMapping("/cadastrar")
-	public ModelAndView cadastro() throws SQLException{
+	public ModelAndView cadastrar() throws SQLException{
 		ModelAndView model = new ModelAndView();
 		model.setViewName("cadastro");
 		model.addObject("perfil", new Perfil());
+		model.addObject("tipos", DaoTipo.listarTipos());
 		return model;
 	}
 	
 	@RequestMapping(value="/salvarPerfil", method=RequestMethod.POST)
-	public String salvar(Perfil perfil, BindingResult result) throws SQLException{
-		DaoPerfil.inserir(perfil);
+	public String criarPerfil(@RequestParam("tipoPerfil") Integer idTipo, Perfil perfil, BindingResult result) throws SQLException{
+		perfil.setIdTipoPerfil(idTipo);
+		DaoPerfil.inserirPerfil(perfil);
 		return "redirect:/";
 	}
 	

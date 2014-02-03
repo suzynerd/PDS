@@ -5,7 +5,7 @@
 <html>
 <head><title>Arquivos</title>
 	<c:url var="src" value="/source"/>
-	
+	<c:url var="home" value="/"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="${src}/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 	<link href="${src}/css-aux/index.css" rel="stylesheet" type="text/css">
@@ -24,7 +24,7 @@
       				<span class="sr-only">Toggle navigation</span>
       				<span class="glyphicon glyphicon-align-justify"></span>
     			</button>
-    			<c:url var="home" value="/"/>
+    			
     			<a class="navbar-brand" href="${home}">SysRedIN</a>
   			</div>
   			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -49,8 +49,8 @@
         				<ul class="dropdown-menu">
           					<li><a href="#">Preferencias</a></li>
           					<li class="divider"></li>
-          					<c:url var="profile" value="/perfil"/>
-          					<li><a href="${profile}/sair">Sair</a></li>
+          					
+          					<li><a href="${home}perfil/sair">Sair</a></li>
         		</ul></li></ul>
 
   				<p class="navbar-text navbar-right">${sessionScope.perfilLogado.nome}</p>
@@ -58,7 +58,9 @@
 		</nav>
 	
 	<div>
-	<form role="form" action="upload" enctype="multipart/form-data" method="post">
+	
+	<c:url value="/" var="home"></c:url>
+	<form role="form" action="${home}upload" enctype="multipart/form-data" method="post">
 		<div class="form-group">
 			<input type="file" name="file"><br/>
 			<input class="btn btn-success" type="submit" value="Salvar Arquivo">
@@ -72,15 +74,15 @@
 			<td>Arquivo</td>
 			<td>Tipo</td>
 		</tr>
-		<c:url var="path" value="/arquivo"/>
+		
 		<c:forEach var="arquivo" items="${arquivos}">
 			<tr>
 				<td>
-					${arquivo.originalFilename}
+					${arquivo.nome}
 				</td>
-				<td>${arquivo.contentType}</td>
+				<td>${arquivo.tipo}</td>
 				<td>
-					<a class="btn btn-success" href="${path}?nome=${arquivo.originalFilename}">
+					<a class="btn btn-success" href="${home}download?idArquivoDownload=${arquivo.idArquivo}">
 						Download <b class="glyphicon glyphicon-download-alt"></b>
 					</a>
 				</td>

@@ -20,14 +20,15 @@ public class DaoPerfil{
 			daoPerfil = new DaoPerfil();
 		return daoPerfil;
 	}
-	public static void inserir(Perfil perfil) throws SQLException {
+	public static void inserirPerfil(Perfil perfil) throws SQLException {
 		try {
 			
-			String sql = "insert into perfil (nome, email, senha, idTipo) values (?, ?, ?, 2)";
+			String sql = "insert into perfil (nome, email, senha, idTipo) values (?, ?, ?, ?)";
 			PreparedStatement stm = conexao.prepareStatement(sql);
 			stm.setString(1, perfil.getNome());
 			stm.setString(2, perfil.getEmail());
 			stm.setString(3, perfil.getSenha());
+			stm.setInt(4, perfil.getIdTipoPerfil());
 			stm.executeUpdate();
 			stm.close();
 		} catch (SQLException e) {

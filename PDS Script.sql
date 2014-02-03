@@ -48,6 +48,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`arquivo` (
   `idArquivo` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NOT NULL,
   `arquivo` LONGBLOB NOT NULL,
+  `tipo` VARCHAR(45) NOT NULL,
   `idPerfil` INT NOT NULL,
   PRIMARY KEY (`idArquivo`),
   INDEX `fk_arquivo_perfil1_idx` (`idPerfil` ASC),

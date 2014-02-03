@@ -42,6 +42,13 @@
     			<label for="exampleInputPassword1">Senha</label>
     			<input value="${perfil.senha}" type="password" name="senha" class="form-control" id="exampleInputPassword1" placeholder="Digite sua senha">
   			</div>
+  			<div class="form-group">
+  				<select id="tipoPerfil" name="tipoPerfil">
+  					<c:forEach var="tipo" items="${tipos}">
+  						<option value="${tipo.idTipo}">${tipo.nome}</option>
+  					</c:forEach>
+  				</select>
+  			</div>
   			<button type="submit" class="btn btn-success" value="salvar">Submit</button>
   		</form>
   	</div>

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dominio.Amigo;
-import dominio.Perfil;
 
 public class DaoAmigo {
 	private static DaoAmigo daoAmigo;

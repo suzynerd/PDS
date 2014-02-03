@@ -12,6 +12,9 @@ public class Arquivo {
 		this.tipo = tipo;
 		this.arquivo = arquivo;
 	}
+	public Arquivo() {
+		// TODO Auto-generated constructor stub
+	}
 	public Integer getIdArquivo() {
 		return idArquivo;
 	}

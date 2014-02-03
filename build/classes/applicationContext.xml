@@ -11,7 +11,7 @@
        http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
  
     <!-- Diz ao Spring em que pacotes buscar por classes anotadas -->
-    <context:component-scan base-package="controle dominio dao" />
+    <context:component-scan base-package="controle dominio dao tools" />
  
     <!-- Configura o Spring MVC para considerar as anotações @Controller -->
     <mvc:annotation-driven />
