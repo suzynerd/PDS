@@ -1,16 +1,24 @@
 package dominio;
 
 public class Turma {
-	public Integer id;
+	private Integer id;
+	private String nome;
+	private String descricao;
+	private String dono;
+	
+	public String getDono() {
+		return dono;
+	}
+	public void setDono(String dono) {
+		this.dono = dono;
+	}
+	public Turma(){}
 	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String nome;
-	public String descricao;
-	public Turma(){}
 	public Turma(String nome, String descricao) {
 		super();
 		this.nome = nome;

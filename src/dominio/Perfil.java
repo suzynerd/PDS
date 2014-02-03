@@ -1,10 +1,10 @@
 package dominio;
 
 public class Perfil {
-	public Integer idPerfil, idTipoPerfil;
-	public String nome;
-	public String email;
-	public String senha;
+	private Integer idPerfil, idTipoPerfil;
+	private String nome;
+	private String email;
+	private String senha;
 	
 	public Perfil(){}
 	public Perfil(String nome,

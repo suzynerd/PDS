@@ -73,7 +73,31 @@ public class DaoPerfil{
 			perfis.add(p);
 		}
 		
+		stm.close(); rs.close();
+		
 		return perfis;
+	}
+	
+	public static String findNomePerfil(Integer id) throws SQLException{
+		String sql = "select nome from perfil where idPerfil = ?";
+		String nome = null;
+		PreparedStatement stm = conexao.prepareStatement(sql);
+		stm.setInt(1, id);
+		ResultSet rs = stm.executeQuery();
+		while(rs.next())
+			nome = rs.getString("nome");
+		stm.close(); rs.close();
+		return nome;
+		
+	}
+	
+	public static boolean isAluno(Integer id) throws SQLException{
+		String sql = "select idTipo from perfil where idPerfil = ?";
+		PreparedStatement stm  = conexao.prepareStatement(sql);
+		stm.setInt(1, id);
+		ResultSet rs = stm.executeQuery();
+
+		return rs.getInt("idTipo") == 1;
 	}
 	
 	
