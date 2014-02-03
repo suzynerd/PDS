@@ -32,7 +32,9 @@
     				<c:url var="home" value="/"/>
     				<li><a href="${home}perfil">Perfil</a></li>
       				<li><a href="${home}amigos">Amigos</a></li>
-      				<li class="active"><a href="#">Minhas Turmas</a></li>
+      				<c:if test="${sessionScope.perfilLogado.idTipoPerfil == 2}">
+      					<li class="active"><a href="#">Minhas Turmas</a></li>
+      				</c:if>
       				<li><a href="${home}arquivos">Arquivos</a></li>
       				
       				<li class="dropdown">
@@ -70,7 +72,7 @@
 			<c:forEach var="turma" items="${turmas}">
 			<tr>
 				<td>
-					${turma.nome}
+					<a href="${home}turma?idTurma=${turma.id}">${turma.nome}</a>
 				</td>
 				<td>${turma.descricao}</td>
 				<td><button class="btn btn-danger">Fechar</button></td>

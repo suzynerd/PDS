@@ -32,7 +32,9 @@
     			<ul class="nav navbar-nav">
     				<li class="active"><a href="${home}perfil">Perfil</a></li>
       				<li><a href="${home}amigos">Amigos</a></li>
-      				<li><a href="${home}turmas">Minhas Turmas</a></li>
+      				<c:if test="${sessionScope.perfilLogado.idTipoPerfil == 2}">
+      					<li><a href="${home}turmas">Minhas Turmas</a></li>
+      				</c:if>
       				<li><a href="${home}arquivos">Arquivos</a></li>
       				
       				<li class="dropdown">

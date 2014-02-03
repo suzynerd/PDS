@@ -32,7 +32,9 @@
     				<c:url var="home" value="/"/>
     				<li><a href="${home}perfil">Perfil</a></li>
       				<li><a href="${home}amigos">Amigos</a></li>
-      				<li class="active"><a href="${home}turmas">Minhas Turmas</a></li>
+      				<c:if test="${sessionScope.perfilLogado.idTipoPerfil == 2}">
+      					<li class="active"><a href="${home}turmas">Minhas Turmas</a></li>
+      				</c:if>
       				<li><a href="${home}arquivos">Arquivos</a></li>
       				
       				<li class="dropdown">
@@ -54,7 +56,7 @@
           					<li><a href="${profile}/sair">Sair</a></li>
         		</ul></li></ul>
 
-  				<p class="navbar-text navbar-right"></p>
+  				<p class="navbar-text navbar-right">${sessionScope.perfilLogado.nome}</p>
   			</div>
 		</nav>
 	
