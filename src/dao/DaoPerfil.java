@@ -20,23 +20,62 @@ public class DaoPerfil{
 			daoPerfil = new DaoPerfil();
 		return daoPerfil;
 	}
-	public static void inserirPerfil(Perfil perfil) throws SQLException {
-		try {
-			
+	public static void inserirPerfil(Perfil perfil){
 			String sql = "insert into perfil (nome, email, senha, idTipo) values (?, ?, ?, ?)";
+			PreparedStatement stm;
+			try {
+				stm = conexao.prepareStatement(sql);
+				stm.setString(1, perfil.getNome());
+				stm.setString(2, perfil.getEmail());
+				stm.setString(3, perfil.getSenha());
+				stm.setInt(4, perfil.getIdTipoPerfil());
+				stm.executeUpdate();
+				stm.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+
+	}
+	
+	public static List<Perfil> getListPerfil(){
+		
+		ArrayList<Perfil> perfis = new ArrayList<Perfil>();
+		String sql = "select * from perfil";
+		PreparedStatement stm;
+		try {
+			stm = conexao.prepareStatement(sql);
+			ResultSet rs = stm.executeQuery();
+			
+			while(rs.next()){
+				Perfil p = new Perfil();
+				p.setIdPerfil(rs.getInt("idPerfil"));
+				p.setNome(rs.getString("nome"));
+				perfis.add(p);
+			}
+			
+			stm.close(); rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return perfis;
+	}
+	
+	public static void deletePerfil(Integer idPerfil){
+		String sql = "delete from perfil where idPerfil = ?";
+		try {
 			PreparedStatement stm = conexao.prepareStatement(sql);
-			stm.setString(1, perfil.getNome());
-			stm.setString(2, perfil.getEmail());
-			stm.setString(3, perfil.getSenha());
-			stm.setInt(4, perfil.getIdTipoPerfil());
+			stm.setInt(1, idPerfil);
 			stm.executeUpdate();
 			stm.close();
 		} catch (SQLException e) {
-			throw new SQLException();
+			e.printStackTrace();
 		}
-
+		
 	}
-
+	
 	public static Perfil logar(Usuario usuario){
 		Perfil p = null;
 		try {
@@ -50,54 +89,54 @@ public class DaoPerfil{
 				p.setIdPerfil(rs.getInt("idPerfil"));
 				p.setNome(rs.getString("nome"));
 				p.setEmail(rs.getString("email"));
+				p.setIdTipoPerfil(rs.getInt("idTipo"));
 			}
 			stm.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return p;
 	}
 	
-	public static List<Perfil> listarPerfis() throws SQLException{
-		
-		ArrayList<Perfil> perfis = new ArrayList<Perfil>();
-		String sql = "select * from perfil";
-		PreparedStatement stm = conexao.prepareStatement(sql);
-		ResultSet rs = stm.executeQuery();
-			
-		while(rs.next()){
-			Perfil p = new Perfil();
-			p.setIdPerfil(rs.getInt("idPerfil"));
-			p.setNome(rs.getString("nome"));
-			perfis.add(p);
+	public static Perfil findNamePerfil(Integer id){
+		String sql = "select * from perfil where idPerfil = ?";
+		Perfil p = new Perfil();
+		PreparedStatement stm;
+		try {
+			stm = conexao.prepareStatement(sql);
+			stm.setInt(1, id);
+			ResultSet rs = stm.executeQuery();
+			while(rs.next()){
+				p.setNome(rs.getString("nome"));
+				p.setEmail(rs.getString("email"));
+				p.setIdPerfil(rs.getInt("idPerfil"));
+				p.setIdTipoPerfil(rs.getInt("idTipo"));
+			}
+			stm.close(); rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		
-		stm.close(); rs.close();
-		
-		return perfis;
-	}
-	
-	public static String findNomePerfil(Integer id) throws SQLException{
-		String sql = "select nome from perfil where idPerfil = ?";
-		String nome = null;
-		PreparedStatement stm = conexao.prepareStatement(sql);
-		stm.setInt(1, id);
-		ResultSet rs = stm.executeQuery();
-		while(rs.next())
-			nome = rs.getString("nome");
-		stm.close(); rs.close();
-		return nome;
+		return p;
 		
 	}
 	
-	public static boolean isAluno(Integer id) throws SQLException{
+	public static boolean isProfessor(Integer id){
 		String sql = "select idTipo from perfil where idPerfil = ?";
-		PreparedStatement stm  = conexao.prepareStatement(sql);
-		stm.setInt(1, id);
-		ResultSet rs = stm.executeQuery();
-
-		return rs.getInt("idTipo") == 1;
+		PreparedStatement stm;
+		try {
+			stm = conexao.prepareStatement(sql);
+			stm.setInt(1, id);
+			ResultSet rs = stm.executeQuery();
+			while(rs.next())
+				return rs.getInt("idTipo") == 2;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+	public static boolean isAluno(Integer id){
+		return !isProfessor(id);
 	}
 	
 	

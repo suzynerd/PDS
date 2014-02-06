@@ -39,7 +39,7 @@ public class ArquivoController {
 			DaoArquivo.upload(a, PerfilTool.getId(session));
 		}
 		
-		return "forward:/arquivos";
+		return "redirect:/arquivos";
 	}
 	
 	@RequestMapping(value="/download", method=RequestMethod.GET)

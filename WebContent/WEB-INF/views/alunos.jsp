@@ -62,7 +62,7 @@
 		
 		<div class="jumbotron">
   		<h1>${turma.nome}</h1>
-  		<p>${turma.bio}</p>
+  		<p>${turma.descricao}</p>
   		<p class="button"><a class="btn btn-primary btn-lg" role="button" href="${home}turma/novoAluno">Adicionar Alunos</a></p>
 		</div>
 		

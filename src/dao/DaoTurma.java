@@ -3,8 +3,6 @@ package dao;
 import java.sql.*;
 import java.util.*;
 
-import javax.naming.spi.DirStateFactory.Result;
-
 import dominio.Amigo;
 import dominio.Perfil;
 import dominio.Turma;
@@ -70,19 +68,20 @@ public class DaoTurma {
 			t.setId(id);
 			t.setNome(rs.getString("nome"));
 			t.setDescricao(rs.getString("bio"));
-			t.setDono(DaoPerfil.findNomePerfil(rs.getInt("idPerfil")));
+			t.setDono((DaoPerfil.findNamePerfil(rs.getInt("idPerfil"))).getNome());
 		}
 		return t;
 	}
 	
 	public static List<Perfil> listarAlunos(Integer idTurma) throws SQLException{
 		List<Perfil> perfis = new ArrayList<>(); Perfil p;
-		String sql = "select idAluno from membros where idTurma = ?";
+		String sql = "select idPerfil from membros where idTurma = ?";
 		PreparedStatement stm = conexao.prepareStatement(sql);
+		stm.setInt(1, idTurma);
 		ResultSet rs = stm.executeQuery();
 		while(rs.next()){
 			p = new Perfil();
-			p.setIdPerfil(rs.getInt("idAluno"));
+			p.setIdPerfil(rs.getInt("idPerfil"));
 			perfis.add(p);
 		}
 		
@@ -101,7 +100,7 @@ public class DaoTurma {
 		return perfis;
 	}
 	public static void addAluno(Integer idTurma, Integer idAluno) throws SQLException{
-		String sql = "insert into menbros (idTurma, idAluno) values (?,?)";
+		String sql = "insert into membros (idTurma, idPerfil) values (?,?)";
 		PreparedStatement stm = conexao.prepareStatement(sql);
 		stm.setInt(1, idTurma);
 		stm.setInt(2, idAluno);
@@ -109,20 +108,27 @@ public class DaoTurma {
 		stm.close();
 	}
 	public static void removeAluno(Integer idTurma, Integer idAluno) throws SQLException{
-		String sql = "delete menbros where idTurma = ? AND idAluno = ?";
+		String sql = "delete from membros where idTurma = ? AND idPerfil = ?";
 		PreparedStatement stm = conexao.prepareStatement(sql);
 		stm.setInt(1, idTurma);
 		stm.setInt(2, idAluno);
 		stm.executeUpdate();
 		stm.close();
 	}
+	
 	public static List<Amigo> novosAlunos(Integer idTurma, Integer idProfessor) throws SQLException{
-		List<Amigo> perfis =  DaoAmigo.listarAmigo(idProfessor);
-		for (int i = 0; i < perfis.size(); i++) {
-			if (!DaoPerfil.isAluno(perfis.get(i).getIdAmigo())) {
-				perfis.remove(i);
+		List<Amigo> alunos =  DaoAmigo.listarAmigo(idProfessor);
+		List<Perfil> p = listarAlunos(idTurma);
+		for (int i = 0; i < alunos.size(); i++) {
+			if (DaoPerfil.isProfessor(alunos.get(i).getIdAmigo())) {
+				alunos.remove(i);
+			}
+			for (int j = 0; j < p.size(); j++) {
+				if (alunos.get(i).getIdAmigo() == p.get(j).getIdPerfil()) {
+					alunos.remove(i);
+				}
 			}
 		}
-		return perfis;
+		return alunos;
 	}
 }

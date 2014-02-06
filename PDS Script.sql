@@ -6,9 +6,6 @@ DROP SCHEMA IF EXISTS `mydb` ;
 CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
 USE `mydb` ;
 
--- -----------------------------------------------------
--- Table `mydb`.`tipoPerfil`
--- -----------------------------------------------------
 DROP TABLE IF EXISTS `mydb`.`tipoPerfil` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`tipoPerfil` (
@@ -17,10 +14,6 @@ CREATE TABLE IF NOT EXISTS `mydb`.`tipoPerfil` (
   PRIMARY KEY (`idTipo`))
 ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `mydb`.`perfil`
--- -----------------------------------------------------
 DROP TABLE IF EXISTS `mydb`.`perfil` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`perfil` (
@@ -39,9 +32,6 @@ CREATE TABLE IF NOT EXISTS `mydb`.`perfil` (
 ENGINE = InnoDB;
 
 
--- -----------------------------------------------------
--- Table `mydb`.`arquivo`
--- -----------------------------------------------------
 DROP TABLE IF EXISTS `mydb`.`arquivo` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`arquivo` (
@@ -59,10 +49,6 @@ CREATE TABLE IF NOT EXISTS `mydb`.`arquivo` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `mydb`.`amigo`
--- -----------------------------------------------------
 DROP TABLE IF EXISTS `mydb`.`amigo` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`amigo` (
@@ -85,9 +71,6 @@ CREATE TABLE IF NOT EXISTS `mydb`.`amigo` (
 ENGINE = InnoDB;
 
 
--- -----------------------------------------------------
--- Table `mydb`.`turma`
--- -----------------------------------------------------
 DROP TABLE IF EXISTS `mydb`.`turma` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`turma` (
@@ -105,9 +88,6 @@ CREATE TABLE IF NOT EXISTS `mydb`.`turma` (
 ENGINE = InnoDB;
 
 
--- -----------------------------------------------------
--- Table `mydb`.`membros`
--- -----------------------------------------------------
 DROP TABLE IF EXISTS `mydb`.`membros` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`membros` (
@@ -127,10 +107,6 @@ CREATE TABLE IF NOT EXISTS `mydb`.`membros` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `mydb`.`post`
--- -----------------------------------------------------
 DROP TABLE IF EXISTS `mydb`.`post` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`post` (
@@ -158,9 +134,6 @@ SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
--- -----------------------------------------------------
--- Data for table `mydb`.`tipoPerfil`
--- -----------------------------------------------------
 START TRANSACTION;
 USE `mydb`;
 INSERT INTO `mydb`.`tipoPerfil` (`nomeTipo`) VALUES ('Aluno');

@@ -28,7 +28,7 @@ public class AmigoController {
 	public ModelAndView Pessoas() throws SQLException{
 		ModelAndView model = new ModelAndView();
 		model.setViewName("pessoas");
-		model.addObject("perfis", DaoPerfil.listarPerfis());
+		model.addObject("perfis", DaoPerfil.getListPerfil());
 		return model;
 	}
 	

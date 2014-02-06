@@ -59,16 +59,17 @@ public class TurmaControler {
 	}
 	
 	@RequestMapping("/turma/alunos")
-	public ModelAndView alunos(Turma turma) throws SQLException{
+	public ModelAndView alunos(HttpSession session) throws SQLException{
 		ModelAndView model = new ModelAndView("alunos");
-		model.addObject("perfis", DaoTurma.listarAlunos(turma.getId()));
-		model.addObject("turma", turma);
+		model.addObject("perfis", DaoTurma.listarAlunos(PerfilTool.getIdTurma(session)));
+		model.addObject("turma", (Turma) session.getAttribute("turmaAtual"));
 		return model;
 	}
 	
 	@RequestMapping("/turma/novoAluno")
 	public ModelAndView novoAluno(HttpSession session) throws SQLException{
 		ModelAndView model = new ModelAndView("novoAluno");
+		model.addObject("alunos", DaoTurma.listarAlunos(PerfilTool.getIdTurma(session)));
 		model.addObject("perfis", DaoTurma.novosAlunos(PerfilTool.getIdTurma(session), PerfilTool.getId(session)));
 		return model;
 	}

@@ -62,8 +62,8 @@
 		
 		<div class="jumbotron">
   		<h1>${turma.nome}</h1>
-  		<p>${turma.bio}</p>
-  		<p class="button"><a class="btn btn-primary btn-lg" role="button">Entrar na Turma</a></p>
+  		<p>${turma.descricao}</p>
+  		<p class="button"><a class="btn btn-primary btn-lg" role="button" href="${home}turma/novoAluno">Adicionar Aluno</a></p>
 	</div>
 
 	<div class="main">
@@ -72,7 +72,7 @@
 				<li><a href="#"><span class="badge pull-right">${turma.dono}</span>
 					Professor
 				</a></li>
-  				<li><a href="#"><span class="badge pull-right">?</span>
+  				<li><a href="${home}turma/alunos"><span class="badge pull-right">?</span>
       			Membros
     			</a></li>
     			<li><a href="#"><span class="badge pull-right">?</span>

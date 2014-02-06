@@ -43,7 +43,7 @@
     			<input value="${perfil.senha}" type="password" name="senha" class="form-control" id="exampleInputPassword1" placeholder="Digite sua senha">
   			</div>
   			<div class="form-group">
-  				<select id="tipoPerfil" name="tipoPerfil">
+  				<select id="tipoPerfil" name="tipoPerfil" class="form-control">
   					<c:forEach var="tipo" items="${tipos}">
   						<option value="${tipo.idTipo}">${tipo.nome}</option>
   					</c:forEach>
