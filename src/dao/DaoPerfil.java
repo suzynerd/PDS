@@ -98,7 +98,7 @@ public class DaoPerfil{
 		return p;
 	}
 	
-	public static Perfil findNamePerfil(Integer id){
+	public static Perfil findPerfil(Integer id){
 		String sql = "select * from perfil where idPerfil = ?";
 		Perfil p = new Perfil();
 		PreparedStatement stm;

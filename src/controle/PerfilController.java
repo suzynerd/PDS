@@ -79,5 +79,13 @@ public class PerfilController {
 		return "redirect:/";
 	}
 	
+	@RequestMapping("/pessoas")
+	public ModelAndView Pessoas() throws SQLException{
+		ModelAndView model = new ModelAndView();
+		model.setViewName("pessoas");
+		model.addObject("perfis", DaoPerfil.getListPerfil());
+		return model;
+	}
+	
 	
 }

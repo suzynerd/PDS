@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dominio.Amigo;
+import dominio.Perfil;
 
 public class DaoAmigo {
 	private static DaoAmigo daoAmigo;
@@ -28,7 +29,7 @@ public class DaoAmigo {
 	}
 	
 	public static List<Amigo> listarAmigo(Integer idPerfil) throws SQLException{
-		List<Amigo> p = new ArrayList<>();
+		List<Amigo> amigos = new ArrayList<>();
 		
 		String sql = "select * from amigo where idPerfil = ?";
 		PreparedStatement stm = conexao.prepareStatement(sql);
@@ -38,7 +39,7 @@ public class DaoAmigo {
 			Amigo a = new Amigo();
 			a.setIdAmigo(rs.getInt("idPerfil1"));
 			a.setIdRelacao(rs.getInt("idRelacao"));
-			p.add(a);
+			amigos.add(a);
 		}
 		sql = "select * from amigo where idPerfil1 = ?";
 		stm = conexao.prepareStatement(sql);
@@ -48,21 +49,21 @@ public class DaoAmigo {
 			Amigo a = new Amigo();
 			a.setIdAmigo(rs.getInt("idPerfil"));
 			a.setIdRelacao(rs.getInt("idRelacao"));
-			p.add(a);
+			amigos.add(a);
 		}
 		
 		sql = "select * from perfil where idPerfil = ?";
-		for (int i = 0; i < p.size(); i++) {
+		for (int i = 0; i < amigos.size(); i++) {
 			stm = conexao.prepareStatement(sql);
-			stm.setInt(1, p.get(i).getIdAmigo());
+			stm.setInt(1, amigos.get(i).getIdAmigo());
 			rs = stm.executeQuery();
 			while(rs.next()){
-				p.get(i).setNome(rs.getString("nome"));
+				amigos.get(i).setNome(rs.getString("nome"));
 			}
 		}
 		stm.close();
 		rs.close();
-		return p;
+		return amigos;
 	}
 
 	public static void removeAmigo(Integer idRelacao) throws SQLException {

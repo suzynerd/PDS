@@ -24,14 +24,6 @@ public class AmigoController {
 		return "redirect:/amigos";
 	}
 	
-	@RequestMapping("/pessoas")
-	public ModelAndView Pessoas() throws SQLException{
-		ModelAndView model = new ModelAndView();
-		model.setViewName("pessoas");
-		model.addObject("perfis", DaoPerfil.getListPerfil());
-		return model;
-	}
-	
 	@RequestMapping("/amigos")
 	public ModelAndView amigos(HttpSession session) throws SQLException{
 		ModelAndView model = new ModelAndView();

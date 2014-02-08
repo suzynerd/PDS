@@ -68,7 +68,7 @@ public class DaoTurma {
 			t.setId(id);
 			t.setNome(rs.getString("nome"));
 			t.setDescricao(rs.getString("bio"));
-			t.setDono((DaoPerfil.findNamePerfil(rs.getInt("idPerfil"))).getNome());
+			t.setDono((DaoPerfil.findPerfil(rs.getInt("idPerfil"))).getNome());
 		}
 		return t;
 	}
