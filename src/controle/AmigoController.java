@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import tools.PerfilTool;
 import dao.DaoAmigo;
-import dao.DaoPerfil;
 import dominio.Perfil;
 
 @Controller
