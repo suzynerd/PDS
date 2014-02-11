@@ -43,6 +43,12 @@
     			<input value="${perfil.senha}" type="password" name="senha" class="form-control" id="exampleInputPassword1" placeholder="Digite sua senha">
   			</div>
   			<div class="form-group">
+  				<label for="confSenha">Confirmar Senha</label>
+  				<input type="password" name="confsenha" class="form-control" id="confSenha" placeholder="Cofirmar Senha" />
+  			</div>
+  			<div class="form-group">
+  				<label for="foto">Foto</label>
+  				<input type="file" name="foto" id="foto" />
   			</div>
   			<div class="form-group">
   				<label for="tipoPerfil">Você é um...</label>
@@ -51,6 +57,10 @@
   						<option value="${tipo.id}">${tipo.nome}</option>
   					</c:forEach>
   				</select>
+  			</div>
+  			<div class="form-group">
+  				<label for="intituicao">Instituição</label>
+  				<select class=""></select>
   			</div>
   			<button type="submit" class="btn btn-success" value="salvar">Submit</button>
   		</form>
