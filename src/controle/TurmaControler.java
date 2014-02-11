@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import tools.PerfilTool;
+import tools.Tool;
 import dao.DaoTurma;
 import dominio.Perfil;
 import dominio.Turma;
@@ -35,7 +35,7 @@ public class TurmaControler {
 	
 	@RequestMapping(value="/salvarturma", method=RequestMethod.GET)
 	public String salvarTurma(@ModelAttribute Turma turma, HttpSession session) throws SQLException{
-		if (PerfilTool.getId(session) == 2) {
+		if (Tool.getId(session) == 2) {
 			DaoTurma.criarTurma(turma, ((Perfil) session.getAttribute("perfilLogado")).getIdPerfil());
 			return "redirect:/turmas";
 		}else
@@ -46,7 +46,7 @@ public class TurmaControler {
 	@RequestMapping("/minhasturmas")
 	public ModelAndView minhasTurmas(HttpSession session) throws SQLException{
 		ModelAndView model = new ModelAndView("turmas");
-		model.addObject("turmas", DaoTurma.listarTurmas(PerfilTool.getId(session)));
+		model.addObject("turmas", DaoTurma.listarTurmas(Tool.getId(session)));
 		return model;
 	}
 	
@@ -61,7 +61,7 @@ public class TurmaControler {
 	@RequestMapping("/turma/alunos")
 	public ModelAndView alunos(HttpSession session) throws SQLException{
 		ModelAndView model = new ModelAndView("alunos");
-		model.addObject("perfis", DaoTurma.listarAlunos(PerfilTool.getIdTurma(session)));
+		model.addObject("perfis", DaoTurma.listarAlunos(Tool.getIdTurma(session)));
 		model.addObject("turma", (Turma) session.getAttribute("turmaAtual"));
 		return model;
 	}
@@ -69,20 +69,20 @@ public class TurmaControler {
 	@RequestMapping("/turma/novoAluno")
 	public ModelAndView novoAluno(HttpSession session) throws SQLException{
 		ModelAndView model = new ModelAndView("novoAluno");
-		model.addObject("alunos", DaoTurma.listarAlunos(PerfilTool.getIdTurma(session)));
-		model.addObject("perfis", DaoTurma.novosAlunos(PerfilTool.getIdTurma(session), PerfilTool.getId(session)));
+		model.addObject("alunos", DaoTurma.listarAlunos(Tool.getIdTurma(session)));
+		model.addObject("perfis", DaoTurma.novosAlunos(Tool.getIdTurma(session), Tool.getId(session)));
 		return model;
 	}
 	
 	@RequestMapping("/turma/adicionarAluno")
 	public String salvarAluno(HttpSession session, @RequestParam("idAluno") Integer id) throws SQLException{
-		DaoTurma.addAluno(PerfilTool.getIdTurma(session), id);
+		DaoTurma.addAluno(Tool.getIdTurma(session), id);
 		return "redirect:/turma/novoAluno";
 	}
 	
 	@RequestMapping("/turma/removerAluno")
 	public String deletarAluno(HttpSession session, @RequestParam("idAluno") Integer id) throws SQLException{
-		DaoTurma.removeAluno(PerfilTool.getIdTurma(session), id);
+		DaoTurma.removeAluno(Tool.getIdTurma(session), id);
 		return "redirect:/turma/alunos";
 	}
 	

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import tools.PerfilTool;
+import tools.Tool;
 import dao.DaoAmigo;
 import dominio.Perfil;
 
@@ -27,7 +27,7 @@ public class AmigoController {
 	public ModelAndView amigos(HttpSession session) throws SQLException{
 		ModelAndView model = new ModelAndView();
 		model.setViewName("amigos");
-		model.addObject("amigos", DaoAmigo.listarAmigo(PerfilTool.getId(session)));
+		model.addObject("amigos", DaoAmigo.listarAmigo(Tool.getId(session)));
 		return model;
 	}
 	

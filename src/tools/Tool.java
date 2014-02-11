@@ -5,13 +5,13 @@ import javax.servlet.http.HttpSession;
 import dominio.Perfil;
 import dominio.Turma;
 
-public class PerfilTool {
-	public static PerfilTool perfilTool;
+public class Tool {
+	public static Tool Tool;
 	
-	public static synchronized PerfilTool getInstance(){
-		if (perfilTool == null)
-			perfilTool = new PerfilTool();
-		return perfilTool;
+	public static synchronized Tool getInstance(){
+		if (Tool == null)
+			Tool = new Tool();
+		return Tool;
 	}
 	
 	public static Integer getId(HttpSession session){

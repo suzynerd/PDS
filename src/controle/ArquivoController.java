@@ -2,6 +2,7 @@ package controle;
 
 import java.io.IOException;
 import java.sql.SQLException;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpEntity;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import tools.PerfilTool;
+import tools.Tool;
 import dao.DaoArquivo;
 import dominio.Arquivo;
 
@@ -24,7 +25,7 @@ public class ArquivoController {
 	@RequestMapping(value="arquivos")
 	public ModelAndView novo(HttpSession session) throws SQLException{
 		ModelAndView model = new ModelAndView("arquivos");
-		model.addObject("arquivos", DaoArquivo.listarArquivos(PerfilTool.getId(session)));
+		model.addObject("arquivos", DaoArquivo.listarArquivos(Tool.getId(session)));
 		
 		return model;
 	}
@@ -36,7 +37,7 @@ public class ArquivoController {
 			a.setNome(file.getOriginalFilename());
 			a.setArquivo(file.getBytes());
 			a.setTipo(file.getContentType());
-			DaoArquivo.upload(a, PerfilTool.getId(session));
+			DaoArquivo.upload(a, Tool.getId(session));
 		}
 		
 		return "redirect:/arquivos";
