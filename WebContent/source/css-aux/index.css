@@ -2,8 +2,11 @@ body {
 	padding-top: 70px;
 	margin: 0 auto;
 	width: 1000px;
-	}
-
+}
+.cadastro{
+	margin: 0 auto;
+	width: 700px;
+}
 aside{
 	width: 196px;
 }
@@ -16,14 +19,6 @@ header{
 }
 .tablea{
 	width: 500px;
-}
-.cadastro{
-	width: 300px;
-	padding: 10px;
-	padding-right: 25px;
-}
-.cadastro .btn{
-	margin-top: 10px;
 }
 aside{
 	float: left;

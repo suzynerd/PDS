@@ -27,7 +27,7 @@ public class AmigoController {
 	public ModelAndView amigos(HttpSession session) throws SQLException{
 		ModelAndView model = new ModelAndView();
 		model.setViewName("amigos");
-		model.addObject("amigos", DaoAmigo.listarAmigo(Tool.getId(session)));
+		model.addObject("amigos", DaoAmigo.listarAmigo(Tool.getIdPerfil(session)));
 		return model;
 	}
 	

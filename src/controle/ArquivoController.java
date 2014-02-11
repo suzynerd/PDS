@@ -25,7 +25,7 @@ public class ArquivoController {
 	@RequestMapping(value="arquivos")
 	public ModelAndView novo(HttpSession session) throws SQLException{
 		ModelAndView model = new ModelAndView("arquivos");
-		model.addObject("arquivos", DaoArquivo.listarArquivos(Tool.getId(session)));
+		model.addObject("arquivos", DaoArquivo.listarArquivos(Tool.getIdPerfil(session)));
 		
 		return model;
 	}
@@ -37,7 +37,7 @@ public class ArquivoController {
 			a.setNome(file.getOriginalFilename());
 			a.setArquivo(file.getBytes());
 			a.setTipo(file.getContentType());
-			DaoArquivo.upload(a, Tool.getId(session));
+			DaoArquivo.upload(a, Tool.getIdPerfil(session));
 		}
 		
 		return "redirect:/arquivos";

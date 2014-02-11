@@ -29,7 +29,7 @@
   	</nav>
   	
   	<div class="main">
-  		<form role="form" action="${salvar}" method="post">
+  		<form role="form" action="${salvar}" method="post" class="cadastro">
   			<div class="form-group">
   				<label for="nome">Nome</label>
   				<input value="${perfil.nome}" type="text" name="nome" class="form-control" id="nome" placeholder="Digite seu nome completo">
@@ -43,9 +43,12 @@
     			<input value="${perfil.senha}" type="password" name="senha" class="form-control" id="exampleInputPassword1" placeholder="Digite sua senha">
   			</div>
   			<div class="form-group">
+  			</div>
+  			<div class="form-group">
+  				<label for="tipoPerfil">Você é um...</label>
   				<select id="tipoPerfil" name="tipoPerfil" class="form-control">
   					<c:forEach var="tipo" items="${tipos}">
-  						<option value="${tipo.idTipo}">${tipo.nome}</option>
+  						<option value="${tipo.id}">${tipo.nome}</option>
   					</c:forEach>
   				</select>
   			</div>

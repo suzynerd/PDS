@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import tools.Tool;
 import dao.DaoPerfil;
 import dao.DaoTipo;
 import dominio.Perfil;
@@ -80,10 +81,11 @@ public class PerfilController {
 	}
 	
 	@RequestMapping("/pessoas")
-	public ModelAndView Pessoas() throws SQLException{
+	public ModelAndView Pessoas(HttpSession session) throws SQLException{
 		ModelAndView model = new ModelAndView();
 		model.setViewName("pessoas");
-		model.addObject("perfis", DaoPerfil.getListPerfil());
+		System.out.println(Tool.getIdPerfil(session));
+		model.addObject("perfis", DaoPerfil.getListPerfil(Tool.getIdPerfil(session)));
 		return model;
 	}
 	

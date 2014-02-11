@@ -27,41 +27,44 @@ public class DaoAmigo {
 		stm.close();
 	}
 	
-	public static List<Amigo> listarAmigo(Integer idPerfil) throws SQLException{
+	public static List<Amigo> listarAmigo(Integer idPerfil){
 		List<Amigo> amigos = new ArrayList<>();
 		
 		String sql = "select * from amigo where idPerfil = ?";
-		PreparedStatement stm = conexao.prepareStatement(sql);
-		stm.setInt(1, idPerfil);
-		ResultSet rs = stm.executeQuery();
-		while(rs.next()){
-			Amigo a = new Amigo();
-			a.setIdAmigo(rs.getInt("idPerfil1"));
-			a.setIdRelacao(rs.getInt("idRelacao"));
-			amigos.add(a);
-		}
-		sql = "select * from amigo where idPerfil1 = ?";
-		stm = conexao.prepareStatement(sql);
-		stm.setInt(1, idPerfil);
-		rs = stm.executeQuery();
-		while(rs.next()){
-			Amigo a = new Amigo();
-			a.setIdAmigo(rs.getInt("idPerfil"));
-			a.setIdRelacao(rs.getInt("idRelacao"));
-			amigos.add(a);
-		}
-		
-		sql = "select * from perfil where idPerfil = ?";
-		for (int i = 0; i < amigos.size(); i++) {
+		PreparedStatement stm;
+		try {
 			stm = conexao.prepareStatement(sql);
-			stm.setInt(1, amigos.get(i).getIdAmigo());
+			stm.setInt(1, idPerfil);
+			ResultSet rs = stm.executeQuery();
+			while(rs.next()){
+				Amigo a = new Amigo();
+				a.setIdAmigo(rs.getInt("idPerfil1"));
+				a.setIdRelacao(rs.getInt("idRelacao"));
+				amigos.add(a);
+			}
+			sql = "select * from amigo where idPerfil1 = ?";
+			stm = conexao.prepareStatement(sql);
+			stm.setInt(1, idPerfil);
 			rs = stm.executeQuery();
 			while(rs.next()){
-				amigos.get(i).setNome(rs.getString("nome"));
+				Amigo a = new Amigo();
+				a.setIdAmigo(rs.getInt("idPerfil"));
+				a.setIdRelacao(rs.getInt("idRelacao"));
+				amigos.add(a);
 			}
-		}
-		stm.close();
-		rs.close();
+			
+			sql = "select * from perfil where idPerfil = ?";
+			for (int i = 0; i < amigos.size(); i++) {
+				stm = conexao.prepareStatement(sql);
+				stm.setInt(1, amigos.get(i).getIdAmigo());
+				rs = stm.executeQuery();
+				while(rs.next()){
+					amigos.get(i).setNome(rs.getString("nome"));
+				}
+			}
+			stm.close();
+			rs.close();
+		} catch (SQLException e) {e.printStackTrace();}
 		return amigos;
 	}
 

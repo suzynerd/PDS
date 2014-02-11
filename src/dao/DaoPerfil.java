@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dominio.Amigo;
 import dominio.Perfil;
 import dominio.Usuario;
 
@@ -38,9 +39,10 @@ public class DaoPerfil{
 
 	}
 	
-	public static List<Perfil> getListPerfil(){
+	public static List<Perfil> getListPerfil(Integer idPerfil){
+		List<Perfil> perfis = new ArrayList<>();
+		List<Amigo> amigos = DaoAmigo.listarAmigo(idPerfil);
 		
-		ArrayList<Perfil> perfis = new ArrayList<Perfil>();
 		String sql = "select * from perfil";
 		PreparedStatement stm;
 		try {
@@ -57,6 +59,14 @@ public class DaoPerfil{
 			stm.close(); rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+		
+		for (int i = 0; i < perfis.size(); i++) {
+			for (int j = 0; j < amigos.size(); j++) {
+				if (perfis.get(i).getIdPerfil() == amigos.get(j).getIdAmigo()) {
+					perfis.remove(i);
+				}
+			}
 		}
 		
 		

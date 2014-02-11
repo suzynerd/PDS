@@ -35,7 +35,7 @@ public class TurmaControler {
 	
 	@RequestMapping(value="/salvarturma", method=RequestMethod.GET)
 	public String salvarTurma(@ModelAttribute Turma turma, HttpSession session) throws SQLException{
-		if (Tool.getId(session) == 2) {
+		if (Tool.getIdPerfil(session) == 2) {
 			DaoTurma.criarTurma(turma, ((Perfil) session.getAttribute("perfilLogado")).getIdPerfil());
 			return "redirect:/turmas";
 		}else
@@ -46,7 +46,7 @@ public class TurmaControler {
 	@RequestMapping("/minhasturmas")
 	public ModelAndView minhasTurmas(HttpSession session) throws SQLException{
 		ModelAndView model = new ModelAndView("turmas");
-		model.addObject("turmas", DaoTurma.listarTurmas(Tool.getId(session)));
+		model.addObject("turmas", DaoTurma.listarTurmas(Tool.getIdPerfil(session)));
 		return model;
 	}
 	
@@ -70,7 +70,7 @@ public class TurmaControler {
 	public ModelAndView novoAluno(HttpSession session) throws SQLException{
 		ModelAndView model = new ModelAndView("novoAluno");
 		model.addObject("alunos", DaoTurma.listarAlunos(Tool.getIdTurma(session)));
-		model.addObject("perfis", DaoTurma.novosAlunos(Tool.getIdTurma(session), Tool.getId(session)));
+		model.addObject("perfis", DaoTurma.novosAlunos(Tool.getIdTurma(session), Tool.getIdPerfil(session)));
 		return model;
 	}
 	

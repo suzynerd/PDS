@@ -14,7 +14,7 @@ public class Tool {
 		return Tool;
 	}
 	
-	public static Integer getId(HttpSession session){
+	public static Integer getIdPerfil(HttpSession session){
 		return ((Perfil) session.getAttribute("perfilLogado")).getIdPerfil();
 	}
 	
