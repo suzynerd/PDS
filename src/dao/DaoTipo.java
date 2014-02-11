@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import dominio.Tipo;
+import dominio.Lista;
 
 public class DaoTipo {
 	private static DaoTipo daoTipo;
@@ -19,16 +19,16 @@ public class DaoTipo {
 		return daoTipo;
 	}
 	
-	public static List<Tipo> listarTipos() throws SQLException{
-		List<Tipo> tipos = new ArrayList<>();
+	public static List<Lista> listarTipos() throws SQLException{
+		List<Lista> tipos = new ArrayList<>();
 		String sql = "select * from tipoperfil";
 		PreparedStatement stm = conexao.prepareStatement(sql);
 		ResultSet rs = stm.executeQuery();
 		while (rs.next()) {
-			Tipo t = new Tipo();
-			t.setIdTipo(rs.getInt("idTipo"));
-			t.setNome(rs.getString("nomeTipo"));
-			tipos.add(t);
+			Lista l = new Lista();
+			l.setId(rs.getInt("idTipo"));
+			l.setNome(rs.getString("nomeTipo"));
+			tipos.add(l);
 		}
 		stm.close();
 		rs.close();

@@ -62,7 +62,7 @@
 	<div>
 	
 	<c:url value="/" var="home"></c:url>
-	<form role="form" action="${home}upload" enctype="multipart/form-data" method="post">
+	<form role="form" action="${home}arquivos/upload" enctype="multipart/form-data" method="post">
 		<div class="form-group">
 			<input type="file" name="file"><br/>
 			<input class="btn btn-success" type="submit" value="Salvar Arquivo">
@@ -84,8 +84,11 @@
 				</td>
 				<td>${arquivo.tipo}</td>
 				<td>
-					<a class="btn btn-success" href="${home}download?idArquivoDownload=${arquivo.idArquivo}">
+					<a class="btn btn-success" href="${home}arquivos/download?idArquivo=${arquivo.idArquivo}">
 						Download <b class="glyphicon glyphicon-download-alt"></b>
+					</a>
+					<a class="btn btn-danger" href="${home}arquivos/delete?idArquivo=${arquivo.idArquivo}">
+						Excluir <b class="glyphicon glyphicon-remove"></b>
 					</a>
 				</td>
 			</tr>

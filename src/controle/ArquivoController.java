@@ -30,7 +30,7 @@ public class ArquivoController {
 		return model;
 	}
 	
-	@RequestMapping(value="/upload", method=RequestMethod.POST)
+	@RequestMapping(value="/arquivos/upload", method=RequestMethod.POST)
 	public String upload(@RequestParam("file") MultipartFile file, HttpSession session) throws IOException, SQLException{
 		if(file != null){
 			Arquivo a = new Arquivo();
@@ -43,8 +43,8 @@ public class ArquivoController {
 		return "redirect:/arquivos";
 	}
 	
-	@RequestMapping(value="/download", method=RequestMethod.GET)
-	public HttpEntity<byte[]> download(@RequestParam("idArquivoDownload") Integer idArquivo) throws IOException, SQLException{
+	@RequestMapping(value="/arquivos/download", method=RequestMethod.GET)
+	public HttpEntity<byte[]> download(@RequestParam("idArquivo") Integer idArquivo) throws IOException, SQLException{
 				Arquivo a = DaoArquivo.download(idArquivo);
 				HttpHeaders headers = new HttpHeaders();
 				
@@ -53,5 +53,13 @@ public class ArquivoController {
 				headers.set("Content-Disposition", "attachment; filename=" + a.getNome().replace(" ", "-"));
 				headers.setContentLength(a.getArquivo().length);
 				return new HttpEntity<byte[]>(a.getArquivo(), headers);
+	}
+	
+	@RequestMapping(value="/arquivos/delete", method=RequestMethod.GET)
+	public String delete(@RequestParam("idArquivo") Integer idArquivo){
+		try {
+			DaoArquivo.removeArquivo(idArquivo);
+		} catch (SQLException e) {e.printStackTrace();}
+		return "redirect:/arquivos";
 	}
 }
