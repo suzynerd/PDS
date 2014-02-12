@@ -14,6 +14,34 @@ CREATE TABLE IF NOT EXISTS `mydb`.`tipoPerfil` (
   PRIMARY KEY (`idTipo`))
 ENGINE = InnoDB;
 
+
+DROP TABLE IF EXISTS `mydb`.`estado`;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`estado`(
+	`idEstado` INT NOT NULL AUTO_INCREMENT,
+	`nome` VARCHAR(45) NOT NULL,
+	`sigla` VARCHAR(2) NOT NULL,
+	PRIMARY KEY (`idEstado`))
+ENGINE = InnoDB;
+
+
+DROP TABLE IF EXISTS `mydb`.`instituicao`;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`instituicao` (
+  `idInstituicao` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(60) NOT NULL,
+  `sigla` VARCHAR(10) NOT NULL,
+  `idEstado` INT NOT NULL,
+  PRIMARY KEY (`idInstituicao`),
+  INDEX `fk_instituicao_estado_idx` (`idEstado` ASC),
+  CONSTRAINT `fk_instituicao_estado`
+  	FOREIGN KEY (`idEstado`)
+  	REFERENCES `mydb`.`estado` (`idEstado`)
+  	ON DELETE NO ACTION
+  	ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 DROP TABLE IF EXISTS `mydb`.`perfil` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`perfil` (
@@ -22,11 +50,18 @@ CREATE TABLE IF NOT EXISTS `mydb`.`perfil` (
   `email` VARCHAR(45) NOT NULL,
   `senha` VARCHAR(45) NOT NULL,
   `idTipo` INT NOT NULL,
+  `idInstituicao` INT NOT NULL,
   PRIMARY KEY (`idPerfil`),
   INDEX `fk_perfil_tipo_perfil_idx` (`idTipo` ASC),
+  INDEX `fk_perfil_instituicao_idx` (`idInstituicao` ASC),
   CONSTRAINT `fk_perfil_tipo_perfil`
     FOREIGN KEY (`idTipo`)
     REFERENCES `mydb`.`tipoPerfil` (`idTipo`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_perfil_instituicao`
+    FOREIGN KEY (`idInstituicao`)
+    REFERENCES `mydb`.`instituicao` (`idInstituicao`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -129,7 +164,6 @@ CREATE TABLE IF NOT EXISTS `mydb`.`post` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
@@ -138,6 +172,9 @@ START TRANSACTION;
 USE `mydb`;
 INSERT INTO `mydb`.`tipoPerfil` (`nomeTipo`) VALUES ('Aluno');
 INSERT INTO `mydb`.`tipoPerfil` (`nomeTipo`) VALUES ('Professor');
+-- INSERT INTO `mydb`.`instituicao` (`nome, sigla`) VALUES ('Instituto Federal de Educação, Ciências e Tecnologia','IFRN');
+-- INSERT INTO `mydb`.`instituicao` (`nome, sigla`) VALUES ('Universidade Federal do Rio Grande do Norte','UFRN');
+
 
 COMMIT;
 

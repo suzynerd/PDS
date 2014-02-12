@@ -60,7 +60,9 @@
   			</div>
   			<div class="form-group">
   				<label for="intituicao">Instituição</label>
-  				<select class=""></select>
+  				<select class="form-control">
+  					<option value=""></option>
+  				</select>
   			</div>
   			<button type="submit" class="btn btn-success" value="salvar">Submit</button>
   		</form>
