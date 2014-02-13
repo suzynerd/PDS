@@ -19,7 +19,7 @@ public class DaoArquivo {
 		return daoArquivo;
 	}
 	
-	public static List<Arquivo> listarArquivos(Integer idPerfil) throws SQLException{
+	public static List<Arquivo> getList(Integer idPerfil) throws SQLException{
 		List<Arquivo> arquivos = new ArrayList<>();
 		String sql = "select * from arquivo where idPerfil = ?";
 		PreparedStatement stm = conexao.prepareStatement(sql);
@@ -37,26 +37,26 @@ public class DaoArquivo {
 		return arquivos;
 	}
 	
-	public static void upload(Arquivo a, Integer idPerfil) throws SQLException{
+	public static void insert(Arquivo arquivo, Integer idPerfil) throws SQLException{
 		String sql = "insert into arquivo (nome, arquivo, tipo, idPerfil) values (?,?,?,?)";
 		PreparedStatement stm = conexao.prepareStatement(sql);
-		stm.setString(1, a.getNome());
-		stm.setBytes(2, a.getArquivo());
-		stm.setString(3, a.getTipo());
+		stm.setString(1, arquivo.getNome());
+		stm.setBytes(2, arquivo.getArquivo());
+		stm.setString(3, arquivo.getTipo());
 		stm.setInt(4, idPerfil);
 		stm.executeUpdate();
 		stm.close();
 	}
 	
-	public static void removeArquivo(Integer id) throws SQLException{
+	public static void remove(Integer idArquivo) throws SQLException{
 		String sql = "delete from arquivo where idArquivo = ?";
 		PreparedStatement stm = conexao.prepareStatement(sql);
-		stm.setInt(1, id);
+		stm.setInt(1, idArquivo);
 		stm.executeUpdate();
 		stm.close();
 	}
 	
-	public static Arquivo download(Integer id) throws SQLException{
+	public static Arquivo find(Integer id) throws SQLException{
 		Arquivo a = new Arquivo();
 		String sql = "select * from arquivo where idArquivo = ?";
 		PreparedStatement stm = conexao.prepareStatement(sql);

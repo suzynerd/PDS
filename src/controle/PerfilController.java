@@ -54,14 +54,14 @@ public class PerfilController {
 	@RequestMapping(value="/salvarPerfil", method=RequestMethod.POST)
 	public String criarPerfil(@RequestParam("tipoPerfil") Integer idTipo, Perfil perfil, BindingResult result) throws SQLException{
 		perfil.setIdTipoPerfil(idTipo);
-		DaoPerfil.insertPerfil(perfil);
+		DaoPerfil.insert(perfil);
 		return "redirect:/";
 	}
 	
 	@RequestMapping(value="/login")
 	public ModelAndView login(Usuario user, HttpSession session){
 		ModelAndView model = new ModelAndView();
-		Perfil p = DaoPerfil.logar(user);
+		Perfil p = DaoPerfil.autenticar(user);
 		if(user.getEmail() != null && user.getSenha() != null && p != null){
 			session.setAttribute("perfilLogado", p);
 			model.setViewName("perfil");
@@ -85,7 +85,7 @@ public class PerfilController {
 		ModelAndView model = new ModelAndView();
 		model.setViewName("pessoas");
 		System.out.println(Tool.getIdPerfil(session));
-		model.addObject("perfis", DaoPerfil.getListPerfil(Tool.getIdPerfil(session)));
+		model.addObject("perfis", DaoPerfil.getList(Tool.getIdPerfil(session)));
 		return model;
 	}
 	

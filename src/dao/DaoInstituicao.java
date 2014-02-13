@@ -39,10 +39,10 @@ public class DaoInstituicao {
 			PreparedStatement stm = conexao.prepareStatement(sql);
 			ResultSet rs = stm.executeQuery();
 			while (rs.next()) {
-				Item i = new Item();
-				i.setId(rs.getInt("idInstituicao"));
-				i.setNome(rs.getString("sigla") + " - " +rs.getString("nome"));
-				itens.add(i);
+				Item item = new Item();
+				item.setId(rs.getInt("idInstituicao"));
+				item.setNome(rs.getString("sigla") + " - " +rs.getString("nome"));
+				itens.add(item);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -50,19 +50,29 @@ public class DaoInstituicao {
 		return itens;
 	}
 	
-	public static Instituicao getInstituicao(Integer id){
+	public static Instituicao find(Integer idInstituicao){
 		String sql = "select * from instituicao where idInstituicao = ?";
-		Instituicao i = new Instituicao();
+		Instituicao instituicao = new Instituicao();
 		try {
 			PreparedStatement stm = conexao.prepareStatement(sql);
-			stm.setInt(1, id);
+			stm.setInt(1, idInstituicao);
 			ResultSet rs = stm.executeQuery();
 			rs.next();
-			i.setId(rs.getInt("idInstituicao"));
-			i.setNome(rs.getString("nome"));
-			i.setSigla(rs.getString("sigla"));
-			i.setIdEstado(rs.getInt("idEstado"));
+			instituicao.setId(rs.getInt("idInstituicao"));
+			instituicao.setNome(rs.getString("nome"));
+			instituicao.setSigla(rs.getString("sigla"));
+			instituicao.setIdEstado(rs.getInt("idEstado"));
 		} catch (SQLException e) {e.printStackTrace();}
-		return i;
+		return instituicao;
+	}
+	
+	public static void remove(Integer idInstituicao){
+		String slq = "delete from instituicao where idInstituicao = ?";
+		try {
+			PreparedStatement stm = conexao.prepareStatement(slq);
+			stm.setInt(1, idInstituicao);
+			stm.executeUpdate();
+			stm.close();
+		} catch (SQLException e) {e.printStackTrace();}
 	}
 }

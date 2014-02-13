@@ -117,7 +117,7 @@ public class DaoTurma {
 	}
 	
 	public static List<Amigo> novosAlunos(Integer idTurma, Integer idProfessor) throws SQLException{
-		List<Amigo> alunos =  DaoAmigo.listarAmigo(idProfessor);
+		List<Amigo> alunos =  DaoAmigo.getList(idProfessor);
 		List<Perfil> p = listarAlunos(idTurma);
 		for (int i = 0; i < alunos.size(); i++) {
 			if (DaoPerfil.isProfessor(alunos.get(i).getIdAmigo())) {

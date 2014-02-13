@@ -19,7 +19,7 @@ public class DaoAmigo {
 		return daoAmigo;
 	}
 	
-	public static void adicionarAmigo(Integer idPerfil, Integer idAmigo) throws SQLException{
+	public static void insert(Integer idPerfil, Integer idAmigo) throws SQLException{
 		String sql = "insert into amigo (idPerfil, idPerfil1) values (?,?)";
 		PreparedStatement stm = conexao.prepareStatement(sql);
 		stm.setInt(1, idPerfil); stm.setInt(2, idAmigo);
@@ -27,7 +27,7 @@ public class DaoAmigo {
 		stm.close();
 	}
 	
-	public static List<Amigo> listarAmigo(Integer idPerfil){
+	public static List<Amigo> getList(Integer idPerfil){
 		List<Amigo> amigos = new ArrayList<>();
 		
 		String sql = "select * from amigo where idPerfil = ?";
@@ -68,7 +68,7 @@ public class DaoAmigo {
 		return amigos;
 	}
 
-	public static void removeAmigo(Integer idRelacao) throws SQLException {
+	public static void remove(Integer idRelacao) throws SQLException {
 		String sql = "delete from amigo where idRelacao = ?";
 		PreparedStatement stm;
 			stm = conexao.prepareStatement(sql);

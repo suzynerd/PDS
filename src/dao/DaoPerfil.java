@@ -21,7 +21,7 @@ public class DaoPerfil{
 			daoPerfil = new DaoPerfil();
 		return daoPerfil;
 	}
-	public static void insertPerfil(Perfil perfil){
+	public static void insert(Perfil perfil){
 			String sql = "insert into perfil (nome, email, senha, idTipo, idInstituicao) values (?, ?, ?, ?, ?)";
 			PreparedStatement stm;
 			try {
@@ -39,9 +39,9 @@ public class DaoPerfil{
 
 	}
 	
-	public static List<Perfil> getListPerfil(Integer idPerfil){
+	public static List<Perfil> getList(Integer idPerfil){
 		List<Perfil> perfis = new ArrayList<>();
-		List<Amigo> amigos = DaoAmigo.listarAmigo(idPerfil);
+		List<Amigo> amigos = DaoAmigo.getList(idPerfil);
 		
 		String sql = "select * from perfil";
 		PreparedStatement stm;
@@ -73,7 +73,7 @@ public class DaoPerfil{
 		return perfis;
 	}
 	
-	public static void deletePerfil(Integer idPerfil){
+	public static void delete(Integer idPerfil){
 		String sql = "delete from perfil where idPerfil = ?";
 		try {
 			PreparedStatement stm = conexao.prepareStatement(sql);
@@ -86,7 +86,7 @@ public class DaoPerfil{
 		
 	}
 	
-	public static Perfil logar(Usuario usuario){
+	public static Perfil autenticar(Usuario usuario){
 		Perfil p = null;
 		try {
 			String sql = "select * from perfil where email = ? AND senha = ?";
@@ -95,12 +95,12 @@ public class DaoPerfil{
 			stm.setString(2, usuario.getSenha());
 			ResultSet rs = stm.executeQuery();
 			p = new Perfil();
-			while(rs.next()){
+			rs.next();
 				p.setIdPerfil(rs.getInt("idPerfil"));
 				p.setNome(rs.getString("nome"));
 				p.setEmail(rs.getString("email"));
 				p.setIdTipoPerfil(rs.getInt("idTipo"));
-			}
+			
 			stm.close();
 		} catch (SQLException e) {
 			e.printStackTrace();

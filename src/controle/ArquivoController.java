@@ -25,7 +25,7 @@ public class ArquivoController {
 	@RequestMapping(value="arquivos")
 	public ModelAndView novo(HttpSession session) throws SQLException{
 		ModelAndView model = new ModelAndView("arquivos");
-		model.addObject("arquivos", DaoArquivo.listarArquivos(Tool.getIdPerfil(session)));
+		model.addObject("arquivos", DaoArquivo.getList(Tool.getIdPerfil(session)));
 		
 		return model;
 	}
@@ -37,7 +37,7 @@ public class ArquivoController {
 			a.setNome(file.getOriginalFilename());
 			a.setArquivo(file.getBytes());
 			a.setTipo(file.getContentType());
-			DaoArquivo.upload(a, Tool.getIdPerfil(session));
+			DaoArquivo.insert(a, Tool.getIdPerfil(session));
 		}
 		
 		return "redirect:/arquivos";
@@ -45,7 +45,7 @@ public class ArquivoController {
 	
 	@RequestMapping(value="/arquivos/download", method=RequestMethod.GET)
 	public HttpEntity<byte[]> download(@RequestParam("idArquivo") Integer idArquivo) throws IOException, SQLException{
-				Arquivo a = DaoArquivo.download(idArquivo);
+				Arquivo a = DaoArquivo.find(idArquivo);
 				HttpHeaders headers = new HttpHeaders();
 				
 				String[] tokens = a.getTipo().split("/");
@@ -58,7 +58,7 @@ public class ArquivoController {
 	@RequestMapping(value="/arquivos/delete", method=RequestMethod.GET)
 	public String delete(@RequestParam("idArquivo") Integer idArquivo){
 		try {
-			DaoArquivo.removeArquivo(idArquivo);
+			DaoArquivo.remove(idArquivo);
 		} catch (SQLException e) {e.printStackTrace();}
 		return "redirect:/arquivos";
 	}
