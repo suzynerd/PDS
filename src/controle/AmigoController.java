@@ -18,8 +18,8 @@ import dominio.Perfil;
 public class AmigoController {
 
 	@RequestMapping(value="/pessoas/adicionarAmigo", method=RequestMethod.GET)
-	public String addAmigo(@RequestParam("idAmigo") Integer idAmigo, HttpSession session) throws SQLException{
-		DaoAmigo.insert(((Perfil) session.getAttribute("perfilLogado")).getIdPerfil() , idAmigo);
+	public String adicionarAmigo(@RequestParam("idAmigo") Integer idAmigo, HttpSession session) throws SQLException{
+		DaoAmigo.insert(Tool.getIdPerfil(session) , idAmigo);
 		return "redirect:/amigos";
 	}
 	
