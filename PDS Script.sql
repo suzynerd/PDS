@@ -29,7 +29,7 @@ DROP TABLE IF EXISTS `mydb`.`instituicao`;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`instituicao` (
   `idInstituicao` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(60) NOT NULL,
+  `nome` VARCHAR(120) NOT NULL,
   `sigla` VARCHAR(10) NOT NULL,
   `idEstado` INT NOT NULL,
   PRIMARY KEY (`idInstituicao`),
@@ -172,7 +172,8 @@ START TRANSACTION;
 USE `mydb`;
 INSERT INTO `mydb`.`tipoPerfil` (`nomeTipo`) VALUES ('Aluno');
 INSERT INTO `mydb`.`tipoPerfil` (`nomeTipo`) VALUES ('Professor');
--- INSERT INTO `mydb`.`instituicao` (`nome, sigla`) VALUES ('Instituto Federal de Educação, Ciências e Tecnologia','IFRN');
+INSERT INTO `mydb`.`estado` (`nome`,`sigla`) VALUES ('Rio Grande do Norte', 'RN');
+INSERT INTO `mydb`.`instituicao` (`nome`,`sigla`,`idEstado`) VALUES ('Instituto Federal de Educação, Ciências e Tecnologia','IFRN', 1);
 -- INSERT INTO `mydb`.`instituicao` (`nome, sigla`) VALUES ('Universidade Federal do Rio Grande do Norte','UFRN');
 
 

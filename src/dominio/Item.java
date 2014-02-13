@@ -1,6 +1,6 @@
 package dominio;
 
-public class Lista {
+public class Item {
 	private Integer id;
 	private String nome;
 	public Integer getId() {
@@ -15,12 +15,12 @@ public class Lista {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public Lista(Integer id, String nome) {
+	public Item(Integer id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
 	}
-	public Lista() {
+	public Item() {
 	}
 	
 }

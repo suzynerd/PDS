@@ -1,19 +1,32 @@
 package dominio;
 
 public class Perfil {
-	private Integer idPerfil, idTipoPerfil;
+	private Integer idPerfil, idTipoPerfil, idInstituicao;
 	private String nome;
 	private String email;
 	private String senha;
 	
 	public Perfil(){}
-	public Perfil(String nome,
-			String email, String senha) {
+	
+	public Perfil(Integer idPerfil, Integer idTipoPerfil,
+			Integer idInstituicao, String nome, String email, String senha) {
+		super();
+		this.idPerfil = idPerfil;
+		this.idTipoPerfil = idTipoPerfil;
+		this.idInstituicao = idInstituicao;
 		this.nome = nome;
 		this.email = email;
 		this.senha = senha;
 	}
-	
+
+	public Integer getIdInstituicao() {
+		return idInstituicao;
+	}
+
+	public void setIdInstituicao(Integer idInstituicao) {
+		this.idInstituicao = idInstituicao;
+	}
+
 	public Integer getIdTipoPerfil() {
 		return idTipoPerfil;
 	}

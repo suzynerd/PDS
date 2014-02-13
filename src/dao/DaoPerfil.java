@@ -21,8 +21,8 @@ public class DaoPerfil{
 			daoPerfil = new DaoPerfil();
 		return daoPerfil;
 	}
-	public static void inserirPerfil(Perfil perfil){
-			String sql = "insert into perfil (nome, email, senha, idTipo) values (?, ?, ?, ?)";
+	public static void insertPerfil(Perfil perfil){
+			String sql = "insert into perfil (nome, email, senha, idTipo, idInstituicao) values (?, ?, ?, ?, ?)";
 			PreparedStatement stm;
 			try {
 				stm = conexao.prepareStatement(sql);

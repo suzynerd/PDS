@@ -59,9 +59,11 @@
   				</select>
   			</div>
   			<div class="form-group">
-  				<label for="intituicao">Instituição</label>
-  				<select class="form-control">
-  					<option value=""></option>
+  				<label for="instituicao">Instituição</label>
+  				<select id="instituicao" name="idInstituicao" class="form-control">
+  					<c:forEach var="instituicao" items="${instituicoes}">
+  						<option value="${instituicao.id}">${instituicao.nome}</option>
+  					</c:forEach>
   				</select>
   			</div>
   			<button type="submit" class="btn btn-success" value="salvar">Submit</button>

@@ -54,7 +54,7 @@ public class PerfilController {
 	@RequestMapping(value="/salvarPerfil", method=RequestMethod.POST)
 	public String criarPerfil(@RequestParam("tipoPerfil") Integer idTipo, Perfil perfil, BindingResult result) throws SQLException{
 		perfil.setIdTipoPerfil(idTipo);
-		DaoPerfil.inserirPerfil(perfil);
+		DaoPerfil.insertPerfil(perfil);
 		return "redirect:/";
 	}
 	
