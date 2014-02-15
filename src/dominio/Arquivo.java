@@ -1,13 +1,13 @@
 package dominio;
 
 public class Arquivo {
-	private Integer idArquivo;
+	private Integer id;
 	private String nome;
 	private String tipo;
 	private byte[] arquivo;
 	
 	public Arquivo(Integer idArquivo, String nome, String tipo, byte[] arquivo) {
-		this.idArquivo = idArquivo;
+		this.id = idArquivo;
 		this.nome = nome;
 		this.tipo = tipo;
 		this.arquivo = arquivo;
@@ -15,11 +15,11 @@ public class Arquivo {
 	public Arquivo() {
 		// TODO Auto-generated constructor stub
 	}
-	public Integer getIdArquivo() {
-		return idArquivo;
+	public Integer getId() {
+		return id;
 	}
-	public void setIdArquivo(Integer idArquivo) {
-		this.idArquivo = idArquivo;
+	public void setId(Integer idArquivo) {
+		this.id = idArquivo;
 	}
 	public String getNome() {
 		return nome;

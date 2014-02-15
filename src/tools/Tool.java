@@ -15,10 +15,14 @@ public class Tool {
 	}
 	
 	public static Integer getIdPerfil(HttpSession session){
-		return ((Perfil) session.getAttribute("perfilLogado")).getIdPerfil();
+		return ((Perfil) session.getAttribute("perfilLogado")).getId();
 	}
 	
 	public static Integer getIdTurma(HttpSession session){
 		return ((Turma) session.getAttribute("turmaAtual")).getId();
+	}
+	
+	public static Integer getTipoPerfil(HttpSession session){
+		return ((Perfil) session.getAttribute("perfilLogado")).getIdTipoPerfil();
 	}
 }

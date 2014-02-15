@@ -1,181 +1,259 @@
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+-- phpMyAdmin SQL Dump
+-- version 4.1.5
+-- http://www.phpmyadmin.net
+--
+-- Host: 127.0.0.1:3306
+-- Tempo de geração: 15/02/2014 às 11:59
+-- Versão do servidor: 5.5.35
+-- Versão do PHP: 5.4.23
 
-DROP SCHEMA IF EXISTS `mydb` ;
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
-USE `mydb` ;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
-DROP TABLE IF EXISTS `mydb`.`tipoPerfil` ;
-
-CREATE TABLE IF NOT EXISTS `mydb`.`tipoPerfil` (
-  `idTipo` INT NOT NULL AUTO_INCREMENT,
-  `nomeTipo` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idTipo`))
-ENGINE = InnoDB;
-
-
-DROP TABLE IF EXISTS `mydb`.`estado`;
-
-CREATE TABLE IF NOT EXISTS `mydb`.`estado`(
-	`idEstado` INT NOT NULL AUTO_INCREMENT,
-	`nome` VARCHAR(45) NOT NULL,
-	`sigla` VARCHAR(2) NOT NULL,
-	PRIMARY KEY (`idEstado`))
-ENGINE = InnoDB;
-
-
-DROP TABLE IF EXISTS `mydb`.`instituicao`;
-
-CREATE TABLE IF NOT EXISTS `mydb`.`instituicao` (
-  `idInstituicao` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(120) NOT NULL,
-  `sigla` VARCHAR(10) NOT NULL,
-  `idEstado` INT NOT NULL,
-  PRIMARY KEY (`idInstituicao`),
-  INDEX `fk_instituicao_estado_idx` (`idEstado` ASC),
-  CONSTRAINT `fk_instituicao_estado`
-  	FOREIGN KEY (`idEstado`)
-  	REFERENCES `mydb`.`estado` (`idEstado`)
-  	ON DELETE NO ACTION
-  	ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
-DROP TABLE IF EXISTS `mydb`.`perfil` ;
-
-CREATE TABLE IF NOT EXISTS `mydb`.`perfil` (
-  `idPerfil` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(45) NOT NULL,
-  `email` VARCHAR(45) NOT NULL,
-  `senha` VARCHAR(45) NOT NULL,
-  `idTipo` INT NOT NULL,
-  `idInstituicao` INT NOT NULL,
-  PRIMARY KEY (`idPerfil`),
-  INDEX `fk_perfil_tipo_perfil_idx` (`idTipo` ASC),
-  INDEX `fk_perfil_instituicao_idx` (`idInstituicao` ASC),
-  CONSTRAINT `fk_perfil_tipo_perfil`
-    FOREIGN KEY (`idTipo`)
-    REFERENCES `mydb`.`tipoPerfil` (`idTipo`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_perfil_instituicao`
-    FOREIGN KEY (`idInstituicao`)
-    REFERENCES `mydb`.`instituicao` (`idInstituicao`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
-DROP TABLE IF EXISTS `mydb`.`arquivo` ;
-
-CREATE TABLE IF NOT EXISTS `mydb`.`arquivo` (
-  `idArquivo` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(45) NOT NULL,
-  `arquivo` LONGBLOB NOT NULL,
-  `tipo` VARCHAR(45) NOT NULL,
-  `idPerfil` INT NOT NULL,
-  PRIMARY KEY (`idArquivo`),
-  INDEX `fk_arquivo_perfil1_idx` (`idPerfil` ASC),
-  CONSTRAINT `fk_arquivo_perfil1`
-    FOREIGN KEY (`idPerfil`)
-    REFERENCES `mydb`.`perfil` (`idPerfil`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-DROP TABLE IF EXISTS `mydb`.`amigo` ;
-
-CREATE TABLE IF NOT EXISTS `mydb`.`amigo` (
-  `idRelacao` INT NOT NULL AUTO_INCREMENT,
-  `idPerfil` INT NOT NULL,
-  `idPerfil1` INT NOT NULL,
-  PRIMARY KEY (`idRelacao`),
-  INDEX `fk_table1_perfil1_idx` (`idPerfil` ASC),
-  INDEX `fk_table1_perfil2_idx` (`idPerfil1` ASC),
-  CONSTRAINT `fk_table1_perfil1`
-    FOREIGN KEY (`idPerfil`)
-    REFERENCES `mydb`.`perfil` (`idPerfil`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_table1_perfil2`
-    FOREIGN KEY (`idPerfil1`)
-    REFERENCES `mydb`.`perfil` (`idPerfil`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
-DROP TABLE IF EXISTS `mydb`.`turma` ;
-
-CREATE TABLE IF NOT EXISTS `mydb`.`turma` (
-  `idTurma` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(45) NOT NULL,
-  `bio` VARCHAR(200) NULL,
-  `idPerfil` INT NOT NULL,
-  PRIMARY KEY (`idTurma`),
-  INDEX `fk_turma_perfil1_idx` (`idPerfil` ASC),
-  CONSTRAINT `fk_turma_perfil1`
-    FOREIGN KEY (`idPerfil`)
-    REFERENCES `mydb`.`perfil` (`idPerfil`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
-DROP TABLE IF EXISTS `mydb`.`membros` ;
-
-CREATE TABLE IF NOT EXISTS `mydb`.`membros` (
-  `idTurma` INT NOT NULL,
-  `idPerfil` INT NOT NULL,
-  INDEX `fk_membros_turma1_idx` (`idTurma` ASC),
-  INDEX `fk_membros_perfil1_idx` (`idPerfil` ASC),
-  CONSTRAINT `fk_membros_turma1`
-    FOREIGN KEY (`idTurma`)
-    REFERENCES `mydb`.`turma` (`idTurma`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_membros_perfil1`
-    FOREIGN KEY (`idPerfil`)
-    REFERENCES `mydb`.`perfil` (`idPerfil`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-DROP TABLE IF EXISTS `mydb`.`post` ;
-
-CREATE TABLE IF NOT EXISTS `mydb`.`post` (
-  `idPost` INT NOT NULL,
-  `conteudo` VARCHAR(300) NOT NULL,
-  `idPerfil` INT NOT NULL,
-  `idTurma` INT NOT NULL,
-  PRIMARY KEY (`idPost`),
-  INDEX `fk_post_perfil1_idx` (`idPerfil` ASC),
-  INDEX `fk_post_turma1_idx` (`idTurma` ASC),
-  CONSTRAINT `fk_post_perfil1`
-    FOREIGN KEY (`idPerfil`)
-    REFERENCES `mydb`.`perfil` (`idPerfil`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_post_turma1`
-    FOREIGN KEY (`idTurma`)
-    REFERENCES `mydb`.`turma` (`idTurma`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
-START TRANSACTION;
+--
+-- Banco de dados: `mydb`
+--
+CREATE DATABASE IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `mydb`;
-INSERT INTO `mydb`.`tipoPerfil` (`nomeTipo`) VALUES ('Aluno');
-INSERT INTO `mydb`.`tipoPerfil` (`nomeTipo`) VALUES ('Professor');
-INSERT INTO `mydb`.`estado` (`nome`,`sigla`) VALUES ('Rio Grande do Norte', 'RN');
-INSERT INTO `mydb`.`instituicao` (`nome`,`sigla`,`idEstado`) VALUES ('Instituto Federal de Educação, Ciências e Tecnologia','IFRN', 1);
--- INSERT INTO `mydb`.`instituicao` (`nome, sigla`) VALUES ('Universidade Federal do Rio Grande do Norte','UFRN');
 
+-- --------------------------------------------------------
 
-COMMIT;
+--
+-- Estrutura para tabela `amigo`
+--
 
+DROP TABLE IF EXISTS `amigo`;
+CREATE TABLE IF NOT EXISTS `amigo` (
+  `idRelacao` int(11) NOT NULL AUTO_INCREMENT,
+  `idPerfil` int(11) NOT NULL,
+  `idPerfil1` int(11) NOT NULL,
+  PRIMARY KEY (`idRelacao`),
+  KEY `fk_table1_perfil1_idx` (`idPerfil`),
+  KEY `fk_table1_perfil2_idx` (`idPerfil1`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `arquivo`
+--
+
+DROP TABLE IF EXISTS `arquivo`;
+CREATE TABLE IF NOT EXISTS `arquivo` (
+  `idArquivo` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(45) NOT NULL,
+  `arquivo` longblob NOT NULL,
+  `tipo` varchar(45) NOT NULL,
+  `idPerfil` int(11) NOT NULL,
+  PRIMARY KEY (`idArquivo`),
+  KEY `fk_arquivo_perfil1_idx` (`idPerfil`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `estado`
+--
+
+DROP TABLE IF EXISTS `estado`;
+CREATE TABLE IF NOT EXISTS `estado` (
+  `idEstado` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(50) NOT NULL,
+  `sigla` varchar(2) NOT NULL,
+  PRIMARY KEY (`idEstado`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Fazendo dump de dados para tabela `estado`
+--
+
+INSERT INTO `estado` (`idEstado`, `nome`, `sigla`) VALUES(1, 'Rio Grande do Norte', 'RN');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `instituicao`
+--
+
+DROP TABLE IF EXISTS `instituicao`;
+CREATE TABLE IF NOT EXISTS `instituicao` (
+  `idInstituicao` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(120) NOT NULL,
+  `sigla` varchar(10) NOT NULL,
+  `idEstado` int(11) NOT NULL,
+  PRIMARY KEY (`idInstituicao`),
+  KEY `fk_instituicao_estado_idx` (`idEstado`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+--
+-- Fazendo dump de dados para tabela `instituicao`
+--
+
+INSERT INTO `instituicao` (`idInstituicao`, `nome`, `sigla`, `idEstado`) VALUES(1, 'Instituto Federal de Educacao, Ciencia e Tecnologia', 'IFRN', 1);
+INSERT INTO `instituicao` (`idInstituicao`, `nome`, `sigla`, `idEstado`) VALUES(4, 'Universidade Federal do Rio Grande do Norte', 'UFRN', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `membros`
+--
+
+DROP TABLE IF EXISTS `membros`;
+CREATE TABLE IF NOT EXISTS `membros` (
+  `idTurma` int(11) NOT NULL,
+  `idPerfil` int(11) NOT NULL,
+  KEY `fk_membros_turma1_idx` (`idTurma`),
+  KEY `fk_membros_perfil1_idx` (`idPerfil`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `notificacao`
+--
+
+DROP TABLE IF EXISTS `notificacao`;
+CREATE TABLE IF NOT EXISTS `notificacao` (
+  `idNotificacao` int(11) NOT NULL AUTO_INCREMENT,
+  `idTurma` int(11) NOT NULL,
+  `idPerfil` int(11) NOT NULL,
+  `mensagem` varchar(120) NOT NULL,
+  PRIMARY KEY (`idNotificacao`),
+  KEY `fk_notificacao_turma_idx` (`idTurma`),
+  KEY `fk_notificacao_perfil_idx` (`idPerfil`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `perfil`
+--
+
+DROP TABLE IF EXISTS `perfil`;
+CREATE TABLE IF NOT EXISTS `perfil` (
+  `idPerfil` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `senha` varchar(45) NOT NULL,
+  `idTipo` int(11) NOT NULL,
+  `idInstituicao` int(11) NOT NULL,
+  PRIMARY KEY (`idPerfil`),
+  KEY `fk_perfil_tipo_perfil_idx` (`idTipo`),
+  KEY `fk_perfil_instituicao_idx` (`idInstituicao`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Fazendo dump de dados para tabela `perfil`
+--
+
+INSERT INTO `perfil` (`idPerfil`, `nome`, `email`, `senha`, `idTipo`, `idInstituicao`) VALUES(1, 'aluno', 'aluno@email', '3663', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `post`
+--
+
+DROP TABLE IF EXISTS `post`;
+CREATE TABLE IF NOT EXISTS `post` (
+  `idPost` int(11) NOT NULL,
+  `conteudo` varchar(300) NOT NULL,
+  `idPerfil` int(11) NOT NULL,
+  `idTurma` int(11) NOT NULL,
+  PRIMARY KEY (`idPost`),
+  KEY `fk_post_perfil1_idx` (`idPerfil`),
+  KEY `fk_post_turma1_idx` (`idTurma`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `tipoperfil`
+--
+
+DROP TABLE IF EXISTS `tipoperfil`;
+CREATE TABLE IF NOT EXISTS `tipoperfil` (
+  `idTipo` int(11) NOT NULL AUTO_INCREMENT,
+  `nomeTipo` varchar(45) NOT NULL,
+  PRIMARY KEY (`idTipo`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+
+--
+-- Fazendo dump de dados para tabela `tipoperfil`
+--
+
+INSERT INTO `tipoperfil` (`idTipo`, `nomeTipo`) VALUES(1, 'Aluno');
+INSERT INTO `tipoperfil` (`idTipo`, `nomeTipo`) VALUES(2, 'Professor');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `turma`
+--
+
+DROP TABLE IF EXISTS `turma`;
+CREATE TABLE IF NOT EXISTS `turma` (
+  `idTurma` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(45) NOT NULL,
+  `bio` varchar(200) DEFAULT NULL,
+  `idPerfil` int(11) NOT NULL,
+  PRIMARY KEY (`idTurma`),
+  KEY `fk_turma_perfil1_idx` (`idPerfil`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Restrições para dumps de tabelas
+--
+
+--
+-- Restrições para tabelas `amigo`
+--
+ALTER TABLE `amigo`
+  ADD CONSTRAINT `fk_table1_perfil1` FOREIGN KEY (`idPerfil`) REFERENCES `perfil` (`idPerfil`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_table1_perfil2` FOREIGN KEY (`idPerfil1`) REFERENCES `perfil` (`idPerfil`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Restrições para tabelas `arquivo`
+--
+ALTER TABLE `arquivo`
+  ADD CONSTRAINT `fk_arquivo_perfil1` FOREIGN KEY (`idPerfil`) REFERENCES `perfil` (`idPerfil`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Restrições para tabelas `instituicao`
+--
+ALTER TABLE `instituicao`
+  ADD CONSTRAINT `fk_instituicao_estado` FOREIGN KEY (`idEstado`) REFERENCES `estado` (`idEstado`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Restrições para tabelas `membros`
+--
+ALTER TABLE `membros`
+  ADD CONSTRAINT `fk_membros_turma1` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_membros_perfil1` FOREIGN KEY (`idPerfil`) REFERENCES `perfil` (`idPerfil`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Restrições para tabelas `notificacao`
+--
+ALTER TABLE `notificacao`
+  ADD CONSTRAINT `fk_notificacao_turma` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_notificacao_perfil` FOREIGN KEY (`idPerfil`) REFERENCES `perfil` (`idPerfil`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Restrições para tabelas `perfil`
+--
+ALTER TABLE `perfil`
+  ADD CONSTRAINT `fk_perfil_tipo_perfil` FOREIGN KEY (`idTipo`) REFERENCES `tipoperfil` (`idTipo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_perfil_instituicao` FOREIGN KEY (`idInstituicao`) REFERENCES `instituicao` (`idInstituicao`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Restrições para tabelas `post`
+--
+ALTER TABLE `post`
+  ADD CONSTRAINT `fk_post_perfil1` FOREIGN KEY (`idPerfil`) REFERENCES `perfil` (`idPerfil`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_post_turma1` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Restrições para tabelas `turma`
+--
+ALTER TABLE `turma`
+  ADD CONSTRAINT `fk_turma_perfil1` FOREIGN KEY (`idPerfil`) REFERENCES `perfil` (`idPerfil`) ON DELETE NO ACTION ON UPDATE NO ACTION;

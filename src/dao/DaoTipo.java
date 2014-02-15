@@ -19,7 +19,7 @@ public class DaoTipo {
 		return daoTipo;
 	}
 	
-	public static List<Item> listarTipos() throws SQLException{
+	public static List<Item> getList() throws SQLException{
 		List<Item> tipos = new ArrayList<>();
 		String sql = "select * from tipoperfil";
 		PreparedStatement stm = conexao.prepareStatement(sql);

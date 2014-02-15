@@ -28,7 +28,7 @@ public class DaoArquivo {
 		
 		while(rs.next()){
 			Arquivo a = new Arquivo();
-			a.setIdArquivo(rs.getInt("idArquivo"));
+			a.setId(rs.getInt("idArquivo"));
 			a.setNome(rs.getNString("nome"));
 			a.setTipo(rs.getString("tipo"));
 			arquivos.add(a);
@@ -63,7 +63,7 @@ public class DaoArquivo {
 		stm.setInt(1, id);
 		ResultSet rs = stm.executeQuery();
 		while(rs.next()){
-			a.setIdArquivo(rs.getInt("idArquivo"));
+			a.setId(rs.getInt("idArquivo"));
 			a.setNome(rs.getNString("nome"));
 			a.setArquivo(rs.getBytes("arquivo"));
 			a.setTipo(rs.getString("tipo"));

@@ -51,7 +51,7 @@ public class DaoPerfil{
 			
 			while(rs.next()){
 				Perfil p = new Perfil();
-				p.setIdPerfil(rs.getInt("idPerfil"));
+				p.setId(rs.getInt("idPerfil"));
 				p.setNome(rs.getString("nome"));
 				perfis.add(p);
 			}
@@ -63,7 +63,7 @@ public class DaoPerfil{
 		
 		for (int i = 0; i < perfis.size(); i++) {
 			for (int j = 0; j < amigos.size(); j++) {
-				if (perfis.get(i).getIdPerfil() == amigos.get(j).getIdAmigo()) {
+				if (perfis.get(i).getId() == amigos.get(j).getIdAmigo()) {
 					perfis.remove(i);
 				}
 			}
@@ -96,7 +96,7 @@ public class DaoPerfil{
 			ResultSet rs = stm.executeQuery();
 			p = new Perfil();
 			rs.next();
-				p.setIdPerfil(rs.getInt("idPerfil"));
+				p.setId(rs.getInt("idPerfil"));
 				p.setNome(rs.getString("nome"));
 				p.setEmail(rs.getString("email"));
 				p.setIdTipoPerfil(rs.getInt("idTipo"));
@@ -119,7 +119,7 @@ public class DaoPerfil{
 			while(rs.next()){
 				p.setNome(rs.getString("nome"));
 				p.setEmail(rs.getString("email"));
-				p.setIdPerfil(rs.getInt("idPerfil"));
+				p.setId(rs.getInt("idPerfil"));
 				p.setIdTipoPerfil(rs.getInt("idTipo"));
 			}
 			stm.close(); rs.close();

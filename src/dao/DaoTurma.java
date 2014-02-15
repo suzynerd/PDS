@@ -17,7 +17,7 @@ public class DaoTurma {
 		return daoTurma;
 	}
 	
-	public static void criarTurma(Turma turma, Integer idProfessor) throws SQLException{
+	public static void insertTurma(Turma turma, Integer idProfessor) throws SQLException{
 		String sql = "insert into turma (nome, bio, idPerfil) values (?,?,?)";
 		PreparedStatement stm = conexao.prepareStatement(sql);
 		stm.setString(1, turma.getNome());
@@ -27,7 +27,7 @@ public class DaoTurma {
 		stm.close();
 	}
 	
-	public static List<Turma> listarTurmas() throws SQLException{
+	public static List<Turma> getList(Integer tipo, Integer idPerfil) throws SQLException{
 		List<Turma> turmas = new ArrayList<>();
 		String sql = "select * from turma";
 		PreparedStatement stm = conexao.prepareStatement(sql);
@@ -39,10 +39,22 @@ public class DaoTurma {
 			t.setDescricao(rs.getString("bio"));
 			turmas.add(t);
 		}
+		
+		List<Turma> tmp = new ArrayList<>();
+		if (tipo == 1)
+			tmp = getListAluno(idPerfil);
+		else tmp = getListProfessor(idPerfil);
+		
+		for (int i = 0; i < turmas.size(); i++) {
+			for (Turma turma : tmp) {
+				if(turmas.get(i).getId() == turma.getId())
+					turmas.remove(i);
+			}}
+		stm.close(); rs.close();
 		return turmas;
 	}
 	
-	public static List<Turma> listarTurmas(Integer idProfessor) throws SQLException{
+	public static List<Turma> getListProfessor(Integer idProfessor) throws SQLException{
 		List<Turma> turmas = new ArrayList<>();
 		String sql = "select * from turma where idPerfil = ?";
 		PreparedStatement stm = conexao.prepareStatement(sql);
@@ -58,22 +70,41 @@ public class DaoTurma {
 		return turmas;
 	}
 	
-	public static Turma findTurma(Integer id) throws SQLException{
+	public static List<Turma> getListAluno(Integer idAluno){
+		List<Turma> turmas = new ArrayList<>();
+		String sql = "select idTurma from membros where idPerfil = ?";
+		PreparedStatement stm;
+		try {
+			stm = conexao.prepareStatement(sql);
+			stm.setInt(1, idAluno);
+			ResultSet rs = stm.executeQuery();
+			while (rs.next()) {
+				turmas.add(findTurma(rs.getInt("idTurma")));
+			}
+		} catch (SQLException e) {e.printStackTrace();}
+		
+		return null;
+	}
+	
+	public static Turma findTurma(Integer id){
 		Turma t = new Turma();
 		String sql = "select * from turma where idTurma = ?";
-		PreparedStatement stm = conexao.prepareStatement(sql);
-		stm.setInt(1, id);
-		ResultSet rs = stm.executeQuery();
-		while (rs.next()) {
-			t.setId(id);
-			t.setNome(rs.getString("nome"));
-			t.setDescricao(rs.getString("bio"));
-			t.setDono((DaoPerfil.findPerfil(rs.getInt("idPerfil"))).getNome());
-		}
+		PreparedStatement stm;
+		try {
+			stm = conexao.prepareStatement(sql);
+			stm.setInt(1, id);
+			ResultSet rs = stm.executeQuery();
+			while (rs.next()) {
+				t.setId(id);
+				t.setNome(rs.getString("nome"));
+				t.setDescricao(rs.getString("bio"));
+				t.setDono((DaoPerfil.findPerfil(rs.getInt("idPerfil"))).getNome());
+			}
+		} catch (SQLException e) {e.printStackTrace();}
 		return t;
 	}
 	
-	public static List<Perfil> listarAlunos(Integer idTurma) throws SQLException{
+	public static List<Perfil> getListMembros(Integer idTurma) throws SQLException{
 		List<Perfil> perfis = new ArrayList<>(); Perfil p;
 		String sql = "select idPerfil from membros where idTurma = ?";
 		PreparedStatement stm = conexao.prepareStatement(sql);
@@ -81,14 +112,14 @@ public class DaoTurma {
 		ResultSet rs = stm.executeQuery();
 		while(rs.next()){
 			p = new Perfil();
-			p.setIdPerfil(rs.getInt("idPerfil"));
+			p.setId(rs.getInt("idPerfil"));
 			perfis.add(p);
 		}
 		
 		sql = "select * from perfil where idPerfil = ?";
 		for (int i = 0; i < perfis.size(); i++) {
 			stm = conexao.prepareStatement(sql);
-			stm.setInt(1, perfis.get(i).getIdPerfil());
+			stm.setInt(1, perfis.get(i).getId());
 			rs = stm.executeQuery();
 			while(rs.next()){
 				perfis.get(i).setNome(rs.getString("nome"));
@@ -99,7 +130,7 @@ public class DaoTurma {
 		}
 		return perfis;
 	}
-	public static void addAluno(Integer idTurma, Integer idAluno) throws SQLException{
+	public static void insertAluno(Integer idTurma, Integer idAluno) throws SQLException{
 		String sql = "insert into membros (idTurma, idPerfil) values (?,?)";
 		PreparedStatement stm = conexao.prepareStatement(sql);
 		stm.setInt(1, idTurma);
@@ -116,15 +147,15 @@ public class DaoTurma {
 		stm.close();
 	}
 	
-	public static List<Amigo> novosAlunos(Integer idTurma, Integer idProfessor) throws SQLException{
+	public static List<Amigo> getListAlunos(Integer idTurma, Integer idProfessor) throws SQLException{
 		List<Amigo> alunos =  DaoAmigo.getList(idProfessor);
-		List<Perfil> p = listarAlunos(idTurma);
+		List<Perfil> p = getListMembros(idTurma);
 		for (int i = 0; i < alunos.size(); i++) {
 			if (DaoPerfil.isProfessor(alunos.get(i).getIdAmigo())) {
 				alunos.remove(i);
 			}
 			for (int j = 0; j < p.size(); j++) {
-				if (alunos.get(i).getIdAmigo() == p.get(j).getIdPerfil()) {
+				if (alunos.get(i).getIdAmigo() == p.get(j).getId()) {
 					alunos.remove(i);
 				}
 			}
