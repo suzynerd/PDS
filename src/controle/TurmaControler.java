@@ -60,8 +60,11 @@ public class TurmaControler {
 	
 	@RequestMapping("/turma")
 	public ModelAndView turma(@RequestParam("idTurma") Integer idTurma, HttpSession session) throws SQLException{
-		ModelAndView model = new ModelAndView("Turma/Main");
-		model.addObject("turma", DaoTurma.findTurma(idTurma));
+		ModelAndView model;
+		if (Tool.getTipoPerfil(session) == 1) {
+			model = new ModelAndView("viwer/Turma");
+		}else
+			model = new ModelAndView("Turma/Main");
 		session.setAttribute("turmaAtual", DaoTurma.findTurma(idTurma));
 		return model;	
 	}
@@ -92,6 +95,22 @@ public class TurmaControler {
 	public String deletarAluno(HttpSession session, @RequestParam("idAluno") Integer id) throws SQLException{
 		DaoTurma.removeAluno(Tool.getIdTurma(session), id);
 		return "redirect:/turma/alunos";
+	}
+	
+	@RequestMapping("/todasTurmas")
+	public ModelAndView todasTurmas(HttpSession session){
+		ModelAndView model = new ModelAndView("Busca/turmas");
+		try {
+			model.addObject("turmas", DaoTurma.getList(Tool.getTipoPerfil(session), Tool.getIdPerfil(session)));
+		} catch (SQLException e) {e.printStackTrace();}
+		return model;
+	}
+	
+	@RequestMapping("/turma/entrarTurma")
+	public String inTurma(HttpSession session){
+		Notificacao not = new Notificacao(Tool.getIdPerfil(session), Tool.getIdTurma(session));
+		DaoNotificacao.insert(not);
+		return "redirect:/";
 	}
 	
 }

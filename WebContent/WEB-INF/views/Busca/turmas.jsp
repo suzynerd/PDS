@@ -46,8 +46,8 @@
         				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
         					<b class="glyphicon glyphicon-search"></b></a>
         				<ul class="dropdown-menu">
-          					<li class="active"><a href="${home}pessoas">Pessoas</a></li>
-          					<li><a href="#">Turmas</a></li>
+          					<li><a href="${home}pessoas">Pessoas</a></li>
+          					<li class="active"><a href="${home}todasTurmas">Turmas</a></li>
         			</ul></li>
     			</ul>
     			<ul class="nav navbar-nav navbar-right">
@@ -76,9 +76,9 @@
     </tr>
     <c:forEach var="turma" items="${turmas}">
     		<tr>
-      			<td>${turma.nome}</td>
+      			<td><a href="${home}turma?idTurma=${turma.id}">${turma.nome}</a></td>
       			<td>${turma.descricao}</td>
-      			<c:if test="${sessionScope.perfilLogado.idTipoPerfil == 2}">
+      			<c:if test="${sessionScope.perfilLogado.idTipoPerfil == 1}">
       				<td><a href="${home}turmas/entrar?idTurma=${turma.id}" class="btn btn-success">Solicitar Entrada</a></td>
       			</c:if>
     		</tr>

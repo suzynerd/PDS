@@ -47,7 +47,7 @@
         					<b class="glyphicon glyphicon-search"></b></a>
         				<ul class="dropdown-menu">
           					<li class="active"><a href="${home}pessoas">Pessoas</a></li>
-          					<li><a href="#">Turmas</a></li>
+          					<li><a href="${home}todasTurmas">Turmas</a></li>
         			</ul></li>
     			</ul>
     			<ul class="nav navbar-nav navbar-right">

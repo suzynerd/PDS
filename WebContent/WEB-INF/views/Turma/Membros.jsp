@@ -42,7 +42,7 @@
         					<b class="glyphicon glyphicon-search"></b></a>
         				<ul class="dropdown-menu">
           					<li><a href="${home}pessoas">Pessoas</a></li>
-          					<li><a href="#">Turmas</a></li>
+          					<li><a href="${home}todasTurmas">Turmas</a></li>
         			</ul></li>
     			</ul>
     			<ul class="nav navbar-nav navbar-right">
@@ -74,7 +74,7 @@
     		<tr>
       			<td>${perfil.nome}</td>
       			<c:url var="turma" value="/turma"></c:url>
-      			<td><a href="${turma}/removerAluno?idAluno=${perfil.idPerfil}" class="btn btn-danger">Remover Aluno</a></td>
+      			<td><a href="${turma}/removerAluno?idAluno=${perfil.id}" class="btn btn-danger">Remover Aluno</a></td>
     		</tr>
     </c:forEach>
   </table>

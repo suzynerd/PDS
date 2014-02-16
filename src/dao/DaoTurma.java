@@ -41,9 +41,23 @@ public class DaoTurma {
 		}
 		
 		List<Turma> tmp = new ArrayList<>();
-		if (tipo == 1)
+		if (tipo == 1){
 			tmp = getListAluno(idPerfil);
-		else tmp = getListProfessor(idPerfil);
+			for (int i = 0; i < turmas.size(); i++) {
+				for (Turma turma : tmp) {
+					if(turmas.get(i) != null && turmas.get(i).getId() == turma.getId())
+						turmas.remove(i);
+				}
+			}
+		}else{
+			tmp = getListProfessor(idPerfil);
+			for (int i = 0; i < turmas.size(); i++) {
+				for (Turma turma : tmp) {
+					if(turmas.get(i) != null && turmas.get(i).getId() == turma.getId())
+						turmas.remove(i);
+				}
+			}
+		}
 		stm.close(); rs.close();
 		return turmas;
 	}
@@ -77,11 +91,11 @@ public class DaoTurma {
 			}
 		} catch (SQLException e) {e.printStackTrace();}
 		
-		return null;
+		return turmas;
 	}
 	
 	public static Turma findTurma(Integer id){
-		Turma t = new Turma();
+		Turma t = null;
 		String sql = "select * from turma where idTurma = ?";
 		PreparedStatement stm;
 		try {
@@ -89,6 +103,7 @@ public class DaoTurma {
 			stm.setInt(1, id);
 			ResultSet rs = stm.executeQuery();
 			while (rs.next()) {
+				t = new Turma();
 				t.setId(id);
 				t.setNome(rs.getString("nome"));
 				t.setDescricao(rs.getString("bio"));

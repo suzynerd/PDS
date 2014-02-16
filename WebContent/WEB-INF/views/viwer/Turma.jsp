@@ -42,7 +42,7 @@
         					<b class="glyphicon glyphicon-search"></b></a>
         				<ul class="dropdown-menu">
           					<li><a href="${home}pessoas">Pessoas</a></li>
-          					<li><a href="#">Turmas</a></li>
+          					<li><a href="${home}todasTurmas">Turmas</a></li>
         			</ul></li>
     			</ul>
     			<ul class="nav navbar-nav navbar-right">
@@ -61,9 +61,9 @@
 		</nav>
 		
 		<div class="jumbotron">
-  		<h1>${sessionScope.turma.nome}</h1>
-  		<p>${sessionScope.turma.descricao}</p>
-  		<p class="button"><a class="btn btn-primary btn-lg" role="button" href="${home}turma/entrarTurma">Adicionar Aluno</a></p>
+  		<h1>${sessionScope.turmaAtual.nome}</h1>
+  		<p>${sessionScope.turmaAtual.descricao}</p>
+  		<p class="button"><a class="btn btn-primary btn-lg" role="button" href="${home}turma/entrarTurma">Entrar na Turma</a></p>
 	</div>
 
 	<div class="main">
