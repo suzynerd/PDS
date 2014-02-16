@@ -71,11 +71,11 @@
       <td>Nome</td><td>Opções</td>
     </tr>
     <c:forEach var="perfil" items="${perfis}">
-    	<c:if test="${sessionScope.perfilLogado.idPerfil != perfil.idPerfil}">
+    	<c:if test="${sessionScope.perfilLogado.id != perfil.id}">
     		<tr>
       			<td>${perfil.nome}</td>
       			<c:url var="pessoas" value="/pessoas"></c:url>
-      			<td><a href="${pessoas}/adicionarAmigo?idAmigo=${perfil.idPerfil}" class="btn btn-success">Adicionar Amigo</a></td>
+      			<td><a href="${pessoas}/adicionarAmigo?idAmigo=${perfil.id}" class="btn btn-success">Adicionar Amigo</a></td>
     		</tr>
     	</c:if>
     </c:forEach>

@@ -23,7 +23,7 @@ public class TurmaControler {
 
 	@RequestMapping("/turmas")
 	public ModelAndView turmas(HttpSession session) throws SQLException{
-		ModelAndView model = new ModelAndView("Perfil/Turmas");
+		ModelAndView model = new ModelAndView("User/Turmas");
 		model.addObject("turmas", DaoTurma.getList(Tool.getTipoPerfil(session), Tool.getIdPerfil(session)));
 		return model;
 	}
@@ -36,7 +36,7 @@ public class TurmaControler {
 	
 	@RequestMapping("/novaturma")
 	public ModelAndView novaTurma(){
-		ModelAndView model = new ModelAndView("Perfil/NovaTurma");
+		ModelAndView model = new ModelAndView("User/NovaTurma");
 		model.addObject("turma", new Turma());
 		return model;
 	}

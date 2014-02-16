@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `instituicao` (
 --
 
 INSERT INTO `instituicao` (`idInstituicao`, `nome`, `sigla`, `idEstado`) VALUES(1, 'Instituto Federal de Educacao, Ciencia e Tecnologia', 'IFRN', 1);
-INSERT INTO `instituicao` (`idInstituicao`, `nome`, `sigla`, `idEstado`) VALUES(4, 'Universidade Federal do Rio Grande do Norte', 'UFRN', 1);
+INSERT INTO `instituicao` (`idInstituicao`, `nome`, `sigla`, `idEstado`) VALUES(2, 'Universidade Federal do Rio Grande do Norte', 'UFRN', 1);
 
 -- --------------------------------------------------------
 
@@ -147,6 +147,7 @@ CREATE TABLE IF NOT EXISTS `perfil` (
 --
 
 INSERT INTO `perfil` (`idPerfil`, `nome`, `email`, `senha`, `idTipo`, `idInstituicao`) VALUES(1, 'aluno', 'aluno@email', '3663', 1, 1);
+INSERT INTO `perfil` (`idPerfil`, `nome`, `email`, `senha`, `idTipo`, `idInstituicao`) VALUES(2, 'professor', 'professor@email', '3663', 2, 2);
 
 -- --------------------------------------------------------
 

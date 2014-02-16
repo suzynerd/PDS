@@ -25,7 +25,7 @@ public class AmigoController {
 	
 	@RequestMapping("/amigos")
 	public ModelAndView amigos(HttpSession session) throws SQLException{
-		ModelAndView model = new ModelAndView("Perfil/Amigos");
+		ModelAndView model = new ModelAndView("User/Amigos");
 		model.addObject("amigos", DaoAmigo.getList(Tool.getIdPerfil(session)));
 		return model;
 	}

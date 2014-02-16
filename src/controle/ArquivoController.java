@@ -24,7 +24,7 @@ public class ArquivoController {
 	
 	@RequestMapping(value="arquivos")
 	public ModelAndView novo(HttpSession session) throws SQLException{
-		ModelAndView model = new ModelAndView("Perfil/Arquivos");
+		ModelAndView model = new ModelAndView("User/Arquivos");
 		model.addObject("arquivos", DaoArquivo.getList(Tool.getIdPerfil(session)));
 		
 		return model;

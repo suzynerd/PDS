@@ -28,7 +28,7 @@ public class PerfilController {
 			model.setViewName("Index/index");
 			model.addObject("usuario", new Usuario());
 		}else
-			model.setViewName("Perfil/Main");
+			model.setViewName("User/Main");
 		return model;
 	}
 	
@@ -38,7 +38,7 @@ public class PerfilController {
 		if (session.getAttribute("perfilLogado") == null) {
 			model.setViewName("Index/index");
 		}else
-			model.setViewName("Perfil/Main");
+			model.setViewName("User/Main");
 		
 		return model;
 	}
@@ -67,12 +67,12 @@ public class PerfilController {
 		Perfil p = DaoPerfil.autenticar(user);
 		if(user.getEmail() != null && user.getSenha() != null && p != null){
 			session.setAttribute("perfilLogado", p);
-			model.setViewName("Perfil/Main");
+			model.setViewName("User/Main");
 		}else{
 			if(session.getAttribute("perfilLogado") == null)
 				model.setViewName("Index/index");
 			else
-				model.setViewName("Perfil/Main");
+				model.setViewName("User/Main");
 		}
 		return model;
 	}

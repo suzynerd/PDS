@@ -5,8 +5,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<title>Turmas</title>
+	<title>${sessionScope.perfilLogado.nome}</title>
 	<c:url var="src" value="/source"/>
+	<c:url var="home" value="/"/>
 	
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="${src}/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -18,7 +19,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 </head>
 <body>
-	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
   			<div class="navbar-header">
     			<button type="button" class="navbar-toggle" data-toggle="collapse"
     			data-target="#bs-example-navbar-collapse-1">
@@ -29,11 +30,10 @@
   			</div>
   			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     			<ul class="nav navbar-nav">
-    				<c:url var="home" value="/"/>
-    				<li><a href="${home}perfil">Perfil</a></li>
+    				<li class="active"><a href="${home}perfil">Perfil</a></li>
       				<li><a href="${home}amigos">Amigos</a></li>
       				<c:if test="${sessionScope.perfilLogado.idTipoPerfil == 2}">
-      					<li class="active"><a href="#">Minhas Turmas</a></li>
+      					<li><a href="${home}turmas">Minhas Turmas</a></li>
       				</c:if>
       				<li><a href="${home}arquivos">Arquivos</a></li>
       				
@@ -59,30 +59,8 @@
   				<p class="navbar-text navbar-right">${sessionScope.perfilLogado.nome}</p>
   			</div>
 		</nav>
-		
-		<div class="jumbotron">
-  		<h1>${turma.nome}</h1>
-  		<p>${turma.descricao}</p>
-  		<p class="button"><a class="btn btn-primary btn-lg" role="button" href="${home}turma/novoAluno">Adicionar Aluno</a></p>
-		</div>
 
-	<div class="main">
-		<aside>
-			<ul class="nav nav-pills nav-stacked">
-				<li><a href="#"><span class="badge pull-right">${turma.dono}</span>
-					Professor
-				</a></li>
-  				<li><a href="${home}turma/alunos"><span class="badge pull-right">?</span>
-      			Membros
-    			</a></li>
-    			<li><a href="#"><span class="badge pull-right">?</span>
-    				Posts
-    			</a></li>
-    			<li><a href="${home}turma/Notificacoes"><span class="badge pull-right">?</span>
-    				Notificações
-    			</a></li>
-			</ul>
-		</aside>
 
-</body>
+  
+  </body>
 </html>

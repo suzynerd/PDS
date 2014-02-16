@@ -44,12 +44,6 @@ public class DaoTurma {
 		if (tipo == 1)
 			tmp = getListAluno(idPerfil);
 		else tmp = getListProfessor(idPerfil);
-		
-		for (int i = 0; i < turmas.size(); i++) {
-			for (Turma turma : tmp) {
-				if(turmas.get(i).getId() == turma.getId())
-					turmas.remove(i);
-			}}
 		stm.close(); rs.close();
 		return turmas;
 	}
