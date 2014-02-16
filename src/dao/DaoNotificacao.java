@@ -51,8 +51,19 @@ public class DaoNotificacao {
 		String sql = "delete from notificacao where idNotificacao = " + id;
 		try {
 			PreparedStatement stm = conexao.prepareStatement(sql);
-			stm.executeUpdate();
-			stm.close();
+			stm.executeUpdate(); stm.close();
+		} catch (SQLException e) {e.printStackTrace();}
+		
+	}
+
+	public static void aceitar(Integer idNotificacao) {
+		String sql = "select * from notificacao where idNotificacao = " + idNotificacao;
+		try {
+			PreparedStatement stm = conexao.prepareStatement(sql);
+			ResultSet rs = stm.executeQuery(); rs.next();
+			Notificacao not = new Notificacao(rs);
+			DaoTurma.insertAluno(not.getIdTurma(), not.getIdPerfil());
+			remove(idNotificacao); stm.close(); rs.close();
 		} catch (SQLException e) {e.printStackTrace();}
 		
 	}
