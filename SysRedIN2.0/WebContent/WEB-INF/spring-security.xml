@@ -12,6 +12,8 @@
 			access="permitAll()"/>
 		<security:intercept-url pattern="/user/main.jsp"
 			access="isAuthenticated()"/>
+		<security:intercept-url pattern="/busca/**"
+			access="isAuthenticated()"/>
 <!--  
 		<security:intercept-url pattern="/login.jsp" 
 			access="isAnonymous()"/>

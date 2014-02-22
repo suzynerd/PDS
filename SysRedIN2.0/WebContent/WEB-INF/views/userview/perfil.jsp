@@ -6,13 +6,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<title><sec:authentication property="details.nome"/></title>
+	<title>${perfil.nome}</title>
 	<c:url var="src" value="/source"/>
 	<c:url var="home" value="/"/>
 	<c:url var="logout" value="/j_spring_security_logout" ></c:url>
 	
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="UTF-8"/>
     <link href="${src}/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 	<link href="${src}/css-aux/index.css" rel="stylesheet" type="text/css">
 
@@ -33,7 +32,7 @@
   			</div>
   			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     			<ul class="nav navbar-nav">
-    				<li class="active"><a href="${home}perfil">Perfil</a></li>
+    				<li><a href="${home}perfil">Perfil</a></li>
       				<li><a href="${home}perfil/amigos">Amigos</a></li>
       				<li><a href="${home}perfil/turmas">Minhas Turmas</a></li>
       				<li><a href="${home}perfil/arquivos">Arquivos</a></li>
@@ -61,8 +60,28 @@
   			</div>
 		</nav>
 
-		
-	</div>
-  	
+		<div class="jumbotron">
+		<img src="http://placehold.it/125x170">
+		<div class="info">
+	  		<h1>${perfil.nome}</h1>
+	  		<h4>${perfil.email}</h4>
+	  		<p>${pefil.instituicao}</p>
+	  	</div>
+	  	<div class="extra">
+	  		<ul class="nav nav-pills nav-stacked">
+  				<li><a href="#"><span class="badge pull-right">${infoPost}</span>
+      					Posts</a></li>
+      			<li><a href="#"><span class="badge pull-right">${infoAmigos}</span>
+      					Amigos</a></li>
+      			<li><a href="#"><span class="badge pull-right">${infoTurmas}</span>
+      					Turmas</a></li>
+      			<li><a href="#"><span class="badge pull-right">${infoArquivos}</span>
+      					Turmas</a></li>
+			</ul>
+      		<c:if test="${amigo == false}">
+      			<a class="btn btn-primary btn-lg" role="button" href="${home}adicionarAmigo?idAmigo=${perfil.id}">Adicionar Amigo</a>
+      		</c:if>
+	  	</div>
+  
   </body>
 </html>

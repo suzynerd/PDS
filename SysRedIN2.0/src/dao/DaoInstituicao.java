@@ -24,9 +24,29 @@ public class DaoInstituicao {
 				item.setNome(rs.getString("sigla") + " - " +rs.getString("nome"));
 				itens.add(item);
 			}
+			stm.close(); rs.close();
 		} catch (SQLException e) {
 			System.out.println("Erro ao listar Instituições");
 		}
 		return itens;
+	}
+	
+	public static Item get(Integer idInstituicao){
+		Item i = null;
+		String sql = "select * from instituicao where idInstituicao = " + idInstituicao;
+		PreparedStatement stm;
+		try {
+			stm = conexao.prepareStatement(sql);
+			ResultSet rs = stm.executeQuery();
+			if(rs.next()){
+				i = new Item();
+				i.setId(rs.getInt("idInstituicao"));
+				i.setNome(rs.getString("sigla") + " - " +rs.getString("nome"));
+			}
+			stm.close(); rs.close();
+		} catch (SQLException e) {
+			System.out.println("Erro a procurar Instituicao: DaoInstituicao.get()");
+		}
+		return i;
 	}
 }

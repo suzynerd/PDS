@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="${src}/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 	<link href="${src}/css-aux/home.css" rel="stylesheet" type="text/css">
-    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="${src}/js/jquery.js"></script>
     <script src="${src}/js/bootstrap.min.js"></script>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 </head>
@@ -33,17 +33,19 @@
       			<li class="dropdown">
         			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Entrar <b class="caret"></b></a>
         			<ul class="dropdown-menu">
-        			<c:url var="sec" value="/j_spring_security_check" />
-					<form role="form" method="post" action="${sec}" class="login">
-        				<div class="form-group">
-        					<input  name="j_username" type="email" class="form-control" placeholder="E-mail">
-        				</div>
-        				<div class="form-group">
-        					<input  name="j_password" type="password" class="form-control" placeholder="Senha">
-        				</div>
-        				<button type="submit" class="btn btn-success" value="login">Confirmar</button>
-         			</form>
-        			</ul></li></ul></div></nav>
+        				<li>
+        </li></ul></li></ul></div></nav>
+        
+        <c:url var="sec" value="/j_spring_security_check" />
+		<form role="form" method="post" action="${sec}" class="login">
+        	<div class="form-group">
+        		<input  name="j_username" type="email" class="form-control" placeholder="E-mail">
+        	</div>
+        	<div class="form-group">
+        		<input  name="j_password" type="password" class="form-control" placeholder="Senha">
+        	</div>
+       		<button type="submit" class="btn btn-success" value="login">Confirmar</button>
+       	</form>
 
 </body>
 </html>

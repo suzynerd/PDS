@@ -12,11 +12,12 @@
 	<c:url var="src" value="/source"/>
 	<c:url var="home" value="/"/>
 	
+	
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="${src}/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 	<link href="${src}/css-aux/index.css" rel="stylesheet" type="text/css">
 
-    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="${src}/js/jquery.js"></script>
     <script src="${src}/js/bootstrap.min.js"></script>
     
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">

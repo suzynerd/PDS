@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dominio.Amigo;
 import dominio.Perfil;
 
 public class DaoPerfil{
@@ -30,8 +31,8 @@ public class DaoPerfil{
 		}
 	}
 
-	public static List<Object> getList() {
-		List<Object> perfis = new ArrayList<>();
+	public static List<Perfil> getList() {
+		List<Perfil> perfis = new ArrayList<>();
 		
 		String sql = "select * from perfil";
 		PreparedStatement stm;
@@ -46,6 +47,7 @@ public class DaoPerfil{
 				p.setNome(rs.getString("nome"));
 				p.setEmail(rs.getString("email"));
 				p.setIdInstituicao(rs.getInt("idInstituicao"));
+				p.setInstituicao(DaoInstituicao.get(p.getIdInstituicao()).getNome());
 				p.setIdTipo(rs.getInt("idTipo"));
 				perfis.add(p);
 			}
@@ -53,6 +55,22 @@ public class DaoPerfil{
 		} catch (SQLException e) {
 			System.out.println("Erro ao listar Perfis");
 		}
+		return perfis;
+	}
+	
+	public static List<Perfil> getList(Integer id){
+		List<Perfil> perfis = getList();
+		List<Amigo> amigos = DaoAmigo.getList(id);
+		
+		for (int i = 0; i < perfis.size(); i++) {
+			for (Amigo amigo : amigos) {
+				if(amigo.getId() == perfis.get(i).getId())
+					perfis.remove(i);
+			}
+			if(perfis.get(i).getId() == id)
+				perfis.remove(i);
+		}
+		
 		return perfis;
 	}
 
@@ -76,7 +94,7 @@ public class DaoPerfil{
 
 	public static Object get(Integer id) {
 		Perfil perfil = new Perfil();
-		String sql = "select * from perfil";
+		String sql = "select * from perfil where idperfil = " + id;
 		PreparedStatement stm;
 		try {
 			stm = conexao.prepareStatement(sql);
@@ -112,10 +130,8 @@ public class DaoPerfil{
 	}
 	
 	public static Perfil logar(String login, String senha){
-		if(!exists(login, senha))
-			return null;
 		
-		Perfil p = new Perfil();
+		Perfil p = null;
 		String sql = "select * from perfil where email = ? AND senha = ?";
 		PreparedStatement stm;
 		
@@ -125,6 +141,8 @@ public class DaoPerfil{
 			stm.setString(2, senha);
 			ResultSet rs = stm.executeQuery();
 			rs.next();
+			
+			p = new Perfil();
 			p.setId(rs.getInt("idPerfil"));
 			p.setNome(rs.getString("nome"));
 			p.setEmail(rs.getString("email"));

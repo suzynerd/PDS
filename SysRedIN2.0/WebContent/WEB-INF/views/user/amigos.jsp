@@ -6,7 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<title><sec:authentication property="details.nome"/></title>
+	<title>Amigos</title>
 	<c:url var="src" value="/source"/>
 	<c:url var="home" value="/"/>
 	<c:url var="logout" value="/j_spring_security_logout" ></c:url>
@@ -33,8 +33,8 @@
   			</div>
   			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     			<ul class="nav navbar-nav">
-    				<li class="active"><a href="${home}perfil">Perfil</a></li>
-      				<li><a href="${home}perfil/amigos">Amigos</a></li>
+    				<li><a href="${home}perfil">Perfil</a></li>
+      				<li class="active"><a href="${home}perfil/amigos">Amigos</a></li>
       				<li><a href="${home}perfil/turmas">Minhas Turmas</a></li>
       				<li><a href="${home}perfil/arquivos">Arquivos</a></li>
       				
@@ -60,9 +60,21 @@
   				<p class="navbar-text navbar-right"><sec:authentication property="details.nome"/></p>
   			</div>
 		</nav>
-
 		
-	</div>
+		<table class="table table-hover">
+			<thead><tr>
+				<td>Nome</td><td>Opções</td>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="amigo" items="${amigos}">
+					<tr>
+						<td><a href="${home}v?idPerfil=${amigo.id}">${amigo.nome}</a></td>
+						<td><a class="btn btn-danger" role="button" href="${home}removerAmigo?idRelacao=${amigo.idRelacao}">Remover Amigo</a></td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
   	
   </body>
 </html>

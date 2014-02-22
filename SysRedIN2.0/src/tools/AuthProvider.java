@@ -23,7 +23,9 @@ public class AuthProvider implements AuthenticationProvider{
 		List<GrantedAuthority> auto = new ArrayList<>();
 		Perfil p = null;
 		
-		if(!DaoPerfil.exists(login, senha))
+		boolean existe = !DaoPerfil.exists(login, senha);
+		
+		if(existe)
 			return null;
 		else{
 			p = DaoPerfil.logar(login, senha);
