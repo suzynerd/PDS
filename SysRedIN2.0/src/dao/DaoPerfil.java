@@ -63,12 +63,15 @@ public class DaoPerfil{
 		List<Amigo> amigos = DaoAmigo.getList(id);
 		
 		for (int i = 0; i < perfis.size(); i++) {
+			if(perfis.get(i).getId() == id)
+				perfis.remove(i);
+		}
+		
+		for (int i = 0; i < perfis.size(); i++) {
 			for (Amigo amigo : amigos) {
 				if(amigo.getId() == perfis.get(i).getId())
 					perfis.remove(i);
 			}
-			if(perfis.get(i).getId() == id)
-				perfis.remove(i);
 		}
 		
 		return perfis;

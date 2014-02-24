@@ -60,6 +60,6 @@ public class ArquivoController {
 	@RequestMapping(value="/arquivos/excluir", method=RequestMethod.GET)
 	public String delete(@RequestParam("idArquivo") Integer idArquivo){
 		DaoArquivo.remove(idArquivo);
-		return "redirect:/arquivos";
+		return "redirect:/perfil/arquivos";
 	}
 }
