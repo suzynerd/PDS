@@ -1,14 +1,14 @@
 package dominio;
 
 public class Usuario {
-	public String email, senha;
+	private String login, senha;
 
-	public String getEmail() {
-		return email;
+	public String getLogin() {
+		return login;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setLogin(String login) {
+		this.login = login;
 	}
 
 	public String getSenha() {
@@ -19,13 +19,9 @@ public class Usuario {
 		this.senha = senha;
 	}
 
-	public Usuario(String email, String senha) {
-		super();
-		this.email = email;
+	public Usuario(String login, String senha) {
+		this.login = login;
 		this.senha = senha;
 	}
-
-	public Usuario() {
-		// TODO Auto-generated constructor stub
-	}
+	
 }

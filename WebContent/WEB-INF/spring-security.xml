@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+		
+	<security:http auto-config="true" use-expressions="true">
+		<security:intercept-url pattern="/index/**" 
+			access="permitAll()"/>
+		<security:intercept-url pattern="/user/main.jsp"
+			access="isAuthenticated()"/>
+		<security:intercept-url pattern="/busca/**"
+			access="isAuthenticated()"/>
+<!--  
+		<security:intercept-url pattern="/login.jsp" 
+			access="isAnonymous()"/>
+		<security:intercept-url pattern="/filmes" 
+			access="hasAnyRole('ROLE_USUARIO', 'ROLE_ADMIN')"/>
+		<security:intercept-url pattern="/novofilme" 
+			access="hasRole('ROLE_ADMIN')"/>
+		<security:intercept-url pattern="/**" 
+			access="isAuthenticated()"/>
+-->
+		<security:form-login
+			default-target-url="/perfil" authentication-failure-url="/"/>
+	</security:http>
+	
+	<security:authentication-manager>
+		<security:authentication-provider ref="AuthProvider" />
+	</security:authentication-manager>
+	
+	<bean id="AuthProvider" 
+		class="tools.AuthProvider"/>
+</beans>

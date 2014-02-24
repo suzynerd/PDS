@@ -3,6 +3,10 @@ package dominio;
 public class Item {
 	private Integer id;
 	private String nome;
+	
+	
+	public Item() {
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -15,12 +19,4 @@ public class Item {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public Item(Integer id, String nome) {
-		super();
-		this.id = id;
-		this.nome = nome;
-	}
-	public Item() {
-	}
-	
 }

@@ -3,8 +3,6 @@ package controle;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -22,25 +20,29 @@ import dominio.Arquivo;
 @Controller
 public class ArquivoController {
 	
-	@RequestMapping(value="arquivos")
-	public ModelAndView novo(HttpSession session) throws SQLException{
-		ModelAndView model = new ModelAndView("User/Arquivos");
-		model.addObject("arquivos", DaoArquivo.getList(Tool.getIdPerfil(session)));
+	@RequestMapping("/perfil/arquivos")
+	public ModelAndView novo() throws SQLException{
+		ModelAndView model = new ModelAndView("user/arquivos");
+		model.addObject("arquivos", DaoArquivo.getList(Tool.getSessionID()));
 		
 		return model;
 	}
 	
 	@RequestMapping(value="/arquivos/upload", method=RequestMethod.POST)
-	public String upload(@RequestParam("file") MultipartFile file, HttpSession session) throws IOException, SQLException{
+	public String upload(@RequestParam("file") MultipartFile file){
 		if(file != null){
 			Arquivo a = new Arquivo();
 			a.setNome(file.getOriginalFilename());
-			a.setArquivo(file.getBytes());
-			a.setTipo(file.getContentType());
-			DaoArquivo.insert(a, Tool.getIdPerfil(session));
+			try {
+				a.setBites(file.getBytes());
+			} catch (IOException e) {
+				System.out.println("Erro ao Carregar Bytes");
+			}
+			a.setFormato(file.getContentType());
+			DaoArquivo.insert(a, Tool.getSessionID());
 		}
 		
-		return "redirect:/arquivos";
+		return "redirect:/perfil/arquivos";
 	}
 	
 	@RequestMapping(value="/arquivos/download", method=RequestMethod.GET)
@@ -48,18 +50,16 @@ public class ArquivoController {
 				Arquivo a = DaoArquivo.find(idArquivo);
 				HttpHeaders headers = new HttpHeaders();
 				
-				String[] tokens = a.getTipo().split("/");
+				String[] tokens = a.getFormato().split("/");
 				headers.setContentType(new MediaType(tokens[0], tokens[1]));
 				headers.set("Content-Disposition", "attachment; filename=" + a.getNome().replace(" ", "-"));
-				headers.setContentLength(a.getArquivo().length);
-				return new HttpEntity<byte[]>(a.getArquivo(), headers);
+				headers.setContentLength(a.getBites().length);
+				return new HttpEntity<byte[]>(a.getBites(), headers);
 	}
 	
-	@RequestMapping(value="/arquivos/delete", method=RequestMethod.GET)
+	@RequestMapping(value="/arquivos/excluir", method=RequestMethod.GET)
 	public String delete(@RequestParam("idArquivo") Integer idArquivo){
-		try {
-			DaoArquivo.remove(idArquivo);
-		} catch (SQLException e) {e.printStackTrace();}
-		return "redirect:/arquivos";
+		DaoArquivo.remove(idArquivo);
+		return "redirect:/perfil/arquivos";
 	}
 }

@@ -1,0 +1,23 @@
+.row{
+	width: 400px;
+	height: 192px;
+	float: left;
+	margin: 48px;
+	background-color: #5E694F;
+	border-radius: 10px;
+}
+
+.row img{
+	margin: 10px;
+	border-radius: 10px;
+}
+
+.row .info, .row img{
+	float: left;
+}
+
+.row .info{
+	width: 240px;
+	margin-top: 8px;
+	height: 138px;
+}

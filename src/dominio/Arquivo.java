@@ -1,25 +1,22 @@
 package dominio;
 
 public class Arquivo {
-	private Integer id;
-	private String nome;
-	private String tipo;
-	private byte[] arquivo;
-	
-	public Arquivo(Integer idArquivo, String nome, String tipo, byte[] arquivo) {
-		this.id = idArquivo;
-		this.nome = nome;
-		this.tipo = tipo;
-		this.arquivo = arquivo;
-	}
+	private int id;
+	private String tipo = null, formato, nome;
+	private byte[] bites;
 	public Arquivo() {
-		// TODO Auto-generated constructor stub
 	}
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(Integer idArquivo) {
-		this.id = idArquivo;
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getFormato() {
+		return formato;
+	}
+	public void setFormato(String formato) {
+		this.formato = formato;
 	}
 	public String getNome() {
 		return nome;
@@ -27,16 +24,16 @@ public class Arquivo {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	public byte[] getBites() {
+		return bites;
+	}
+	public void setBites(byte[] bites) {
+		this.bites = bites;
+	}
 	public String getTipo() {
 		return tipo;
 	}
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
-	}
-	public byte[] getArquivo() {
-		return arquivo;
-	}
-	public void setArquivo(byte[] arquivo) {
-		this.arquivo = arquivo;
 	}
 }

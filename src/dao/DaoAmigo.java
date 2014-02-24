@@ -10,21 +10,19 @@ import java.util.List;
 import dominio.Amigo;
 
 public class DaoAmigo {
-	private static DaoAmigo daoAmigo;
-	private static Connection conexao = Conexao.getConnection();
-
-	public static synchronized DaoAmigo getInstance(){
-		if (daoAmigo == null)
-			daoAmigo = new DaoAmigo();
-		return daoAmigo;
-	}
+	public static Connection conexao = Conexao.getConnection();
 	
-	public static void insert(Integer idPerfil, Integer idAmigo) throws SQLException{
+	public static void insert(Integer idPerfil, Integer idAmigo){
 		String sql = "insert into amigo (idPerfil, idPerfil1) values (?,?)";
-		PreparedStatement stm = conexao.prepareStatement(sql);
-		stm.setInt(1, idPerfil); stm.setInt(2, idAmigo);
-		stm.executeUpdate();
-		stm.close();
+		PreparedStatement stm;
+		try {
+			stm = conexao.prepareStatement(sql);
+			stm.setInt(1, idPerfil); stm.setInt(2, idAmigo);
+			stm.executeUpdate();
+			stm.close();
+		} catch (SQLException e) {
+			System.out.println("Erro ao Adicionar amigo: DaoAmigo.insert()");
+		}
 	}
 	
 	public static List<Amigo> getList(Integer idPerfil){
@@ -38,7 +36,7 @@ public class DaoAmigo {
 			ResultSet rs = stm.executeQuery();
 			while(rs.next()){
 				Amigo a = new Amigo();
-				a.setIdAmigo(rs.getInt("idPerfil1"));
+				a.setId(rs.getInt("idPerfil1"));
 				a.setIdRelacao(rs.getInt("idRelacao"));
 				amigos.add(a);
 			}
@@ -48,7 +46,7 @@ public class DaoAmigo {
 			rs = stm.executeQuery();
 			while(rs.next()){
 				Amigo a = new Amigo();
-				a.setIdAmigo(rs.getInt("idPerfil"));
+				a.setId(rs.getInt("idPerfil"));
 				a.setIdRelacao(rs.getInt("idRelacao"));
 				amigos.add(a);
 			}
@@ -56,7 +54,7 @@ public class DaoAmigo {
 			sql = "select * from perfil where idPerfil = ?";
 			for (int i = 0; i < amigos.size(); i++) {
 				stm = conexao.prepareStatement(sql);
-				stm.setInt(1, amigos.get(i).getIdAmigo());
+				stm.setInt(1, amigos.get(i).getId());
 				rs = stm.executeQuery();
 				while(rs.next()){
 					amigos.get(i).setNome(rs.getString("nome"));
@@ -64,16 +62,35 @@ public class DaoAmigo {
 			}
 			stm.close();
 			rs.close();
-		} catch (SQLException e) {e.printStackTrace();}
+		} catch (SQLException e) {System.out.println("Erro ao Procurar amigo: DaoAmigo.getList()");}
 		return amigos;
 	}
-
-	public static void remove(Integer idRelacao) throws SQLException {
+	
+	public static void delete(Integer idRelacao){
 		String sql = "delete from amigo where idRelacao = ?";
 		PreparedStatement stm;
+		try {
 			stm = conexao.prepareStatement(sql);
 			stm.setInt(1, idRelacao);
 			stm.executeUpdate();
 			stm.close();
+		} catch (SQLException e) {
+			System.out.println("Erro ao deletar amigo: DaoAmigo.delete()");
+		}
+	}
+	
+	public static boolean isAmigo(Integer idPerfil, Integer idAmigo){
+		List<Amigo> amigos = getList(idPerfil);
+		for (Amigo amigo : amigos) {
+			if(amigo.getId() == idAmigo)
+				return true;
+		}
+		
+		return false;
+	}
+	
+	public static Integer count(Integer idPerfil){
+		List<Amigo> amigos = getList(idPerfil);
+		return amigos.size();
 	}
 }

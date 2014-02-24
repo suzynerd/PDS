@@ -4,11 +4,9 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
-
 <html>
 <head>
-	<title>Pessoas</title>
+	<title>${perfil.nome}</title>
 	<c:url var="src" value="/source"/>
 	<c:url var="home" value="/"/>
 	<c:url var="logout" value="/j_spring_security_logout" ></c:url>
@@ -16,7 +14,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="${src}/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 	<link href="${src}/css-aux/index.css" rel="stylesheet" type="text/css">
-	<link href="${src}/css-aux/pessoas.css" rel="stylesheet" type="text/css">
 
     <script src="${src}/js/jquery.js"></script>
     <script src="${src}/js/bootstrap.min.js"></script>
@@ -24,19 +21,17 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 </head>
 <body>
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
   			<div class="navbar-header">
     			<button type="button" class="navbar-toggle" data-toggle="collapse"
     			data-target="#bs-example-navbar-collapse-1">
       				<span class="sr-only">Toggle navigation</span>
       				<span class="glyphicon glyphicon-align-justify"></span>
     			</button>
-    			<c:url var="home" value="/"/>
     			<a class="navbar-brand" href="${home}">SysRedIN</a>
   			</div>
   			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     			<ul class="nav navbar-nav">
-    				
     				<li><a href="${home}perfil">Perfil</a></li>
       				<li><a href="${home}perfil/amigos">Amigos</a></li>
       				<li><a href="${home}perfil/turmas">Minhas Turmas</a></li>
@@ -46,7 +41,7 @@
         				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
         					<b class="glyphicon glyphicon-search"></b></a>
         				<ul class="dropdown-menu">
-          					<li class="active"><a href="${home}busca/Pessoas">Pessoas</a></li>
+          					<li><a href="${home}busca/Pessoas">Pessoas</a></li>
           					<li><a href="${home}busca/Turmas">Turmas</a></li>
         			</ul></li>
     			</ul>
@@ -57,6 +52,7 @@
         				<ul class="dropdown-menu">
           					<li><a href="${home}perfil/preferencias">Preferencias</a></li>
           					<li class="divider"></li>
+          					<c:url var="profile" value="/perfil"/>
           					<li><a href="${logout}">Sair</a></li>
         		</ul></li></ul>
 
@@ -64,17 +60,28 @@
   			</div>
 		</nav>
 
-
-    <c:forEach var="perfil" items="${perfis}">
-    		<div class="row">
-            <img src="http://placehold.it/125x170" alt="">
-            <div class="info">
-                <h3>${perfil.nome}</h3>
-                <h4>${perfil.email}</h4>
-                <p>${perfil.instituicao}</p>
-            </div>
-            <a class="btn btn-primary" href="${home}v?idPerfil=${perfil.id}">Visualisar <span class="glyphicon glyphicon-chevron-right"></span></a>
-        </div>
-    </c:forEach>
-</body>
+		<div class="jumbotron">
+		<img src="http://placehold.it/125x170">
+		<div class="info">
+	  		<h1>${perfil.nome}</h1>
+	  		<h4>${perfil.email}</h4>
+	  		<p>${pefil.instituicao}</p>
+	  	</div>
+	  	<div class="extra">
+	  		<ul class="nav nav-pills nav-stacked">
+  				<li><a href="#"><span class="badge pull-right">${infoPost}</span>
+      					Posts</a></li>
+      			<li><a href="#"><span class="badge pull-right">${infoAmigos}</span>
+      					Amigos</a></li>
+      			<li><a href="#"><span class="badge pull-right">${infoTurmas}</span>
+      					Turmas</a></li>
+      			<li><a href="#"><span class="badge pull-right">${infoArquivos}</span>
+      					Turmas</a></li>
+			</ul>
+      		<c:if test="${amigo == false}">
+      			<a class="btn btn-primary btn-lg" role="button" href="${home}adicionarAmigo?idAmigo=${perfil.id}">Adicionar Amigo</a>
+      		</c:if>
+	  	</div>
+  
+  </body>
 </html>
