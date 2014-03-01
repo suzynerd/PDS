@@ -14,7 +14,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="${src}/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 	<link href="${src}/css-aux/index.css" rel="stylesheet" type="text/css">
-
+	<link href="${src}/css-aux/viewPerfil.css" rel="stylesheet" type="text/css">
+	
     <script src="${src}/js/jquery.js"></script>
     <script src="${src}/js/bootstrap.min.js"></script>
     
@@ -61,27 +62,27 @@
 		</nav>
 
 		<div class="jumbotron">
-		<img src="http://placehold.it/125x170">
-		<div class="info">
-	  		<h1>${perfil.nome}</h1>
-	  		<h4>${perfil.email}</h4>
-	  		<p>${pefil.instituicao}</p>
-	  	</div>
-	  	<div class="extra">
-	  		<ul class="nav nav-pills nav-stacked">
-  				<li><a href="#"><span class="badge pull-right">${infoPost}</span>
-      					Posts</a></li>
-      			<li><a href="#"><span class="badge pull-right">${infoAmigos}</span>
-      					Amigos</a></li>
-      			<li><a href="#"><span class="badge pull-right">${infoTurmas}</span>
-      					Turmas</a></li>
-      			<li><a href="#"><span class="badge pull-right">${infoArquivos}</span>
-      					Turmas</a></li>
-			</ul>
-      		<c:if test="${amigo == false}">
+			<img src="http://placehold.it/125x170">
+			<div class="info">
+	  			<h1>${perfil.nome}</h1>
+	  			<h4>${perfil.email}</h4>
+	  			<p>${pefil.instituicao}</p>
+	  		</div>
+	  		<div class="extra">
+	  			<ul class="nav nav-pills">
+  					<li><a href="#"><span class="badge pull-right">${infoPost}</span>
+      						Posts</a></li>
+      				<li><a href="#"><span class="badge pull-right">${infoAmigos}</span>
+      						Amigos</a></li>
+      				<li><a href="#"><span class="badge pull-right">${infoTurmas}</span>
+      						Turmas</a></li>
+      				<li><a href="#"><span class="badge pull-right">${infoArquivos}</span>
+      						Turmas</a></li>
+				</ul>
+	  		</div>
+	  		<c:if test="${amigo == false}">
       			<a class="btn btn-primary btn-lg" role="button" href="${home}adicionarAmigo?idAmigo=${perfil.id}">Adicionar Amigo</a>
       		</c:if>
-	  	</div>
-  
+  		</div>
   </body>
 </html>

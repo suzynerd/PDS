@@ -3,12 +3,18 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 15/02/2014 às 11:59
+-- Tempo de geração: 27/02/2014 às 16:34
 -- Versão do servidor: 5.5.35
 -- Versão do PHP: 5.4.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Banco de dados: `mydb`
@@ -43,11 +49,11 @@ CREATE TABLE IF NOT EXISTS `arquivo` (
   `idArquivo` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) NOT NULL,
   `arquivo` longblob NOT NULL,
-  `tipo` varchar(45) NOT NULL,
+  `formato` varchar(45) NOT NULL,
   `idPerfil` int(11) NOT NULL,
   PRIMARY KEY (`idArquivo`),
   KEY `fk_arquivo_perfil1_idx` (`idPerfil`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -61,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `estado` (
   `nome` varchar(50) NOT NULL,
   `sigla` varchar(2) NOT NULL,
   PRIMARY KEY (`idEstado`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Fazendo dump de dados para tabela `estado`
@@ -90,7 +96,7 @@ CREATE TABLE IF NOT EXISTS `instituicao` (
 --
 
 INSERT INTO `instituicao` (`idInstituicao`, `nome`, `sigla`, `idEstado`) VALUES(1, 'Instituto Federal de Educacao, Ciencia e Tecnologia', 'IFRN', 1);
-INSERT INTO `instituicao` (`idInstituicao`, `nome`, `sigla`, `idEstado`) VALUES(2, 'Universidade Federal do Rio Grande do Norte', 'UFRN', 1);
+INSERT INTO `instituicao` (`idInstituicao`, `nome`, `sigla`, `idEstado`) VALUES(4, 'Universidade Federal do Rio Grande do Norte', 'UFRN', 1);
 
 -- --------------------------------------------------------
 
@@ -140,14 +146,14 @@ CREATE TABLE IF NOT EXISTS `perfil` (
   PRIMARY KEY (`idPerfil`),
   KEY `fk_perfil_tipo_perfil_idx` (`idTipo`),
   KEY `fk_perfil_instituicao_idx` (`idInstituicao`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Fazendo dump de dados para tabela `perfil`
 --
 
 INSERT INTO `perfil` (`idPerfil`, `nome`, `email`, `senha`, `idTipo`, `idInstituicao`) VALUES(1, 'aluno', 'aluno@email', '3663', 1, 1);
-INSERT INTO `perfil` (`idPerfil`, `nome`, `email`, `senha`, `idTipo`, `idInstituicao`) VALUES(2, 'professor', 'professor@email', '3663', 2, 2);
+INSERT INTO `perfil` (`idPerfil`, `nome`, `email`, `senha`, `idTipo`, `idInstituicao`) VALUES(3, 'professor', 'professor@email', '3663', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -177,7 +183,7 @@ CREATE TABLE IF NOT EXISTS `tipoperfil` (
   `idTipo` int(11) NOT NULL AUTO_INCREMENT,
   `nomeTipo` varchar(45) NOT NULL,
   PRIMARY KEY (`idTipo`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Fazendo dump de dados para tabela `tipoperfil`
@@ -229,22 +235,22 @@ ALTER TABLE `instituicao`
 -- Restrições para tabelas `membros`
 --
 ALTER TABLE `membros`
-  ADD CONSTRAINT `fk_membros_turma1` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_membros_perfil1` FOREIGN KEY (`idPerfil`) REFERENCES `perfil` (`idPerfil`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_membros_perfil1` FOREIGN KEY (`idPerfil`) REFERENCES `perfil` (`idPerfil`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_membros_turma1` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Restrições para tabelas `notificacao`
 --
 ALTER TABLE `notificacao`
-  ADD CONSTRAINT `fk_notificacao_turma` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_notificacao_perfil` FOREIGN KEY (`idPerfil`) REFERENCES `perfil` (`idPerfil`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_notificacao_perfil` FOREIGN KEY (`idPerfil`) REFERENCES `perfil` (`idPerfil`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_notificacao_turma` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`idTurma`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Restrições para tabelas `perfil`
 --
 ALTER TABLE `perfil`
-  ADD CONSTRAINT `fk_perfil_tipo_perfil` FOREIGN KEY (`idTipo`) REFERENCES `tipoperfil` (`idTipo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_perfil_instituicao` FOREIGN KEY (`idInstituicao`) REFERENCES `instituicao` (`idInstituicao`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_perfil_instituicao` FOREIGN KEY (`idInstituicao`) REFERENCES `instituicao` (`idInstituicao`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_perfil_tipo_perfil` FOREIGN KEY (`idTipo`) REFERENCES `tipoperfil` (`idTipo`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Restrições para tabelas `post`
@@ -258,3 +264,7 @@ ALTER TABLE `post`
 --
 ALTER TABLE `turma`
   ADD CONSTRAINT `fk_turma_perfil1` FOREIGN KEY (`idPerfil`) REFERENCES `perfil` (`idPerfil`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

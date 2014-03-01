@@ -1,9 +1,35 @@
 package dominio;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Perfil {
 	private Integer id, idTipo, idInstituicao;
-	private String nome, senha, email, instituicao;
+	private String nome, senha, email, instituicao, tipo;
+	
+	public Perfil(ResultSet rs){
+		
+		try {
+			this.tipo = rs.getString("nomeTipo");
+			this.id = rs.getInt("idPerfil");
+			this.nome = rs.getString("nome");
+			this.email = rs.getString("email");
+			this.instituicao = rs.getString("nomeInstituicao");
+			this.idInstituicao = rs.getInt("idInstituicao");
+		} catch (SQLException e) {
+			System.out.println("Erro ao sear valores na lista de perfis");
+		}
+	}
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
 	public Perfil() {}
+	
 
 	public Integer getId() {
 		return id;

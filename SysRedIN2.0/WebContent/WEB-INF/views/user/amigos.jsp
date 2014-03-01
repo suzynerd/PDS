@@ -70,7 +70,7 @@
 				<c:forEach var="amigo" items="${amigos}">
 					<tr>
 						<td><a href="${home}v?idPerfil=${amigo.id}">${amigo.nome}</a></td>
-						<td><a class="btn btn-danger" role="button" href="${home}removerAmigo?idRelacao=${amigo.idRelacao}">Remover Amigo</a></td>
+						<td><a class="btn btn-danger" role="button" href="${home}removerAmigo?idAmigo=${amigo.id}">Remover Amigo</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

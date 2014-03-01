@@ -18,8 +18,8 @@ public class AmigoController {
 	}
 	
 	@RequestMapping("/removerAmigo")
-	public String removerAmigo(@RequestParam("idRelacao") Integer idRelacao){
-		DaoAmigo.delete(idRelacao);
+	public String removerAmigo(@RequestParam("idAmigo") Integer idAmigo){
+		DaoAmigo.delete(Tool.getSessionID(), idAmigo);
 		return "redirect:/perfil/amigos";
 	}
 	

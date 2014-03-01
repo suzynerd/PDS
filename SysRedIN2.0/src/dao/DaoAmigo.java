@@ -13,11 +13,20 @@ public class DaoAmigo {
 	public static Connection conexao = Conexao.getConnection();
 	
 	public static void insert(Integer idPerfil, Integer idAmigo){
-		String sql = "insert into amigo (idPerfil, idPerfil1) values (?,?)";
+		String sql = "insert into amigo (idPerfil, idAmigo) values (?,?)";
 		PreparedStatement stm;
 		try {
 			stm = conexao.prepareStatement(sql);
 			stm.setInt(1, idPerfil); stm.setInt(2, idAmigo);
+			stm.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("Erro ao Adicionar amigo: DaoAmigo.insert()");
+		}
+		
+		sql = "insert into amigo (idPerfil, idAmigo) values (?,?)";
+		try {
+			stm = conexao.prepareStatement(sql);
+			stm.setInt(1, idAmigo); stm.setInt(2, idPerfil);
 			stm.executeUpdate();
 			stm.close();
 		} catch (SQLException e) {
@@ -28,50 +37,42 @@ public class DaoAmigo {
 	public static List<Amigo> getList(Integer idPerfil){
 		List<Amigo> amigos = new ArrayList<>();
 		
-		String sql = "select * from amigo where idPerfil = ?";
+		String sql = "select amigo.idAmigo, perfil.nome from amigo inner join perfil on amigo.idAmigo = perfil.idPerfil"
+				+ " where amigo.idPerfil = ? order by perfil.nome ASC;";
 		PreparedStatement stm;
 		try {
 			stm = conexao.prepareStatement(sql);
 			stm.setInt(1, idPerfil);
 			ResultSet rs = stm.executeQuery();
-			while(rs.next()){
-				Amigo a = new Amigo();
-				a.setId(rs.getInt("idPerfil1"));
-				a.setIdRelacao(rs.getInt("idRelacao"));
-				amigos.add(a);
-			}
-			sql = "select * from amigo where idPerfil1 = ?";
-			stm = conexao.prepareStatement(sql);
-			stm.setInt(1, idPerfil);
-			rs = stm.executeQuery();
-			while(rs.next()){
-				Amigo a = new Amigo();
-				a.setId(rs.getInt("idPerfil"));
-				a.setIdRelacao(rs.getInt("idRelacao"));
-				amigos.add(a);
-			}
 			
-			sql = "select * from perfil where idPerfil = ?";
-			for (int i = 0; i < amigos.size(); i++) {
-				stm = conexao.prepareStatement(sql);
-				stm.setInt(1, amigos.get(i).getId());
-				rs = stm.executeQuery();
-				while(rs.next()){
-					amigos.get(i).setNome(rs.getString("nome"));
-				}
+			while(rs.next()){
+				amigos.add(new Amigo(rs));
 			}
-			stm.close();
-			rs.close();
-		} catch (SQLException e) {System.out.println("Erro ao Procurar amigo: DaoAmigo.getList()");}
+			rs.close(); stm.close();
+		} catch (SQLException e) {
+			System.out.println("Erro ao Listar Amigos");
+		}
+		
 		return amigos;
 	}
 	
-	public static void delete(Integer idRelacao){
-		String sql = "delete from amigo where idRelacao = ?";
+	public static void delete(Integer idPerfil, Integer idAmigo){
+		String sql = "delete from amigo where idPerfil = ? and idAmigo = ?";
 		PreparedStatement stm;
 		try {
 			stm = conexao.prepareStatement(sql);
-			stm.setInt(1, idRelacao);
+			stm.setInt(1, idPerfil);
+			stm.setInt(2, idAmigo);
+			stm.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("Erro ao deletar amigo: DaoAmigo.delete()");
+		}
+		
+		sql = "delete from amigo where idPerfil = ? and idAmigo = ?";
+		try {
+			stm = conexao.prepareStatement(sql);
+			stm.setInt(1, idAmigo);
+			stm.setInt(2, idPerfil);
 			stm.executeUpdate();
 			stm.close();
 		} catch (SQLException e) {
@@ -80,17 +81,26 @@ public class DaoAmigo {
 	}
 	
 	public static boolean isAmigo(Integer idPerfil, Integer idAmigo){
-		List<Amigo> amigos = getList(idPerfil);
-		for (Amigo amigo : amigos) {
-			if(amigo.getId() == idAmigo)
-				return true;
+		boolean a = false;
+		String sql = "select * from amigo where idPerfil = ? and idAmigo = ?";
+		PreparedStatement stm;
+		
+		try {
+			stm = conexao.prepareStatement(sql);
+			stm.setInt(1, idPerfil);
+			stm.setInt(2, idAmigo);
+			ResultSet rs = stm.executeQuery();
+			if(rs.next()) a = true;
+			stm.close(); rs.close();
+			
+		} catch (SQLException e) {
+			System.out.println("Erro ao verificar Amigo");
 		}
 		
-		return false;
+		return a;
 	}
 	
 	public static Integer count(Integer idPerfil){
-		List<Amigo> amigos = getList(idPerfil);
-		return amigos.size();
+		return getList(idPerfil).size();
 	}
 }

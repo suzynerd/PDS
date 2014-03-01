@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import dominio.Amigo;
+import tools.Tool;
 import dominio.Perfil;
 
 public class DaoPerfil{
@@ -34,11 +34,16 @@ public class DaoPerfil{
 	public static List<Perfil> getList() {
 		List<Perfil> perfis = new ArrayList<>();
 		
-		String sql = "select * from perfil";
+		String sql = "select perfil.idPerfil, perfil.idTipo, perfil.nome, perfil.email, perfil.idInstituicao, "
+				+ "concat_ws(' - ', instituicao.sigla, instituicao.nome) as nomeInstituicao "
+				+ "from perfil "
+				+ "inner join instituicao on perfil.idInstituicao = instituicao.idInstituicao "
+				+ "where idPerfil <> ?";
 		PreparedStatement stm;
 		
 		try {
 			stm = conexao.prepareStatement(sql);
+			stm.setInt(1, Tool.getSessionID());
 			ResultSet rs = stm.executeQuery();
 			
 			while(rs.next()){
@@ -47,7 +52,7 @@ public class DaoPerfil{
 				p.setNome(rs.getString("nome"));
 				p.setEmail(rs.getString("email"));
 				p.setIdInstituicao(rs.getInt("idInstituicao"));
-				p.setInstituicao(DaoInstituicao.get(p.getIdInstituicao()).getNome());
+				p.setInstituicao("nomeInstituicao");
 				p.setIdTipo(rs.getInt("idTipo"));
 				perfis.add(p);
 			}
@@ -59,20 +64,28 @@ public class DaoPerfil{
 	}
 	
 	public static List<Perfil> getList(Integer id){
-		List<Perfil> perfis = getList();
-		List<Amigo> amigos = DaoAmigo.getList(id);
+		List<Perfil> perfis = new ArrayList<>();
+		String sql = 
+				"select perfil.idPerfil, perfil.nome, perfil.email, tipoperfil.nomeTipo, instituicao.idInstituicao, "
+				+ "concat_ws(' - ', instituicao.sigla, instituicao.nome) as nomeInstituicao "
+				+ "from amigo "
+				+ "inner join perfil on amigo.idAmigo <> perfil.idPerfil and perfil.idPerfil <> ? "
+				+ "inner join tipoperfil on perfil.idTipo = tipoperfil.idTipo "
+				+ "inner join instituicao on perfil.idInstituicao = instituicao.idInstituicao "
+				+ "where amigo.idPerfil = " + id;
+		PreparedStatement stm;
 		
-		for (int i = 0; i < perfis.size(); i++) {
-			if(perfis.get(i).getId() == id)
-				perfis.remove(i);
-		}
-		
-		for (int i = 0; i < perfis.size(); i++) {
-			for (Amigo amigo : amigos) {
-				if(amigo.getId() == perfis.get(i).getId())
-					perfis.remove(i);
+		try {
+			stm = conexao.prepareStatement(sql);
+			stm.setInt(1, id);
+			ResultSet rs = stm.executeQuery();
+			while(rs.next()){
+				perfis.add(new Perfil(rs));
 			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao Listar Perfis 2");
 		}
+		
 		
 		return perfis;
 	}
@@ -170,6 +183,20 @@ public class DaoPerfil{
 			System.out.println("Erro ao Verificar E-mail");
 		}
 		return false;
+	}
+	
+	public static void update(String nome, String email){
+		String sql = "update perfil set nome = ?, email = ? where idPerfil = " + Tool.getSessionID();
+		PreparedStatement stm;
+		
+		try {
+			stm = conexao.prepareStatement(sql);
+			stm.setString(1, nome);
+			stm.setString(2, email);
+		} catch (SQLException e) {
+			System.out.println("Erro ao alterar dados do Perfil (nome email)");
+		}
+		  
 	}
 
 }

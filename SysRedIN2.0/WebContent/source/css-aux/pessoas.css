@@ -1,23 +1,21 @@
-.row{
+.well{
 	width: 400px;
-	height: 192px;
+	min-height: 192px;
 	float: left;
 	margin: 48px;
-	background-color: #5E694F;
 	border-radius: 10px;
+	padding: 10px;
 }
 
-.row img{
-	margin: 10px;
+.well img{
 	border-radius: 10px;
-}
-
-.row .info, .row img{
 	float: left;
 }
-
-.row .info{
-	width: 240px;
-	margin-top: 8px;
-	height: 138px;
+.well .info{
+	float: left;
+	width: 233px;
 }
+.well .info, .well .btn{
+	margin-left: 20px;
+}
+

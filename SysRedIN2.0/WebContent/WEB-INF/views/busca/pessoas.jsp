@@ -66,7 +66,7 @@
 
 
     <c:forEach var="perfil" items="${perfis}">
-    		<div class="row">
+    		<div class="well">
             <img src="http://placehold.it/125x170" alt="">
             <div class="info">
                 <h3>${perfil.nome}</h3>
