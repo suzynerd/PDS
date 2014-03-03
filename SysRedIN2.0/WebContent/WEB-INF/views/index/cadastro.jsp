@@ -25,10 +25,10 @@
 <body>
 	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
   		<div class="navbar-header">
-    		<a class="navbar-brand" href="${home}">SysRedIN</a>
+    		<a class="navbar-brand" href="${home}"><img src="logo3.png" alt="logo" width="132" height="92"></a>
   		</div>
   	</nav>
-  	
+  	<br>
   	<div class="main">
   		<form role="form" action="${home}cadastro/salvar" method="post" class="cadastro" id="cadastro">
   			<div class="form-group">
@@ -66,7 +66,7 @@
   			<button type="submit" class="btn btn-success" value="salvar">Submit</button>
   		</form>
 
-  	
+  	<br>
   	
   	</div>
 </body>

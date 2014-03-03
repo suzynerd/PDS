@@ -32,7 +32,7 @@
       				<span class="glyphicon glyphicon-align-justify"></span>
     			</button>
     			<c:url var="home" value="/"/>
-    			<a class="navbar-brand" href="${home}">SysRedIN</a>
+    			<a class="navbar-brand" href="${home}">SysRedIN></a>
   			</div>
   			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     			<ul class="nav navbar-nav">
